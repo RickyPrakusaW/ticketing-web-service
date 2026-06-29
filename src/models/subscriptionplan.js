@@ -1,28 +1,14 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class SubscriptionPlan extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-    }
-  }
-  SubscriptionPlan.init({
-    name: DataTypes.STRING,
-    description: DataTypes.TEXT,
-    price: DataTypes.DECIMAL,
-    duration_days: DataTypes.INTEGER,
-    event_limit: DataTypes.INTEGER,
-    is_active: DataTypes.BOOLEAN
-  }, {
-    sequelize,
-    modelName: 'SubscriptionPlan',
-  });
-  return SubscriptionPlan;
-};
+const mongoose = require('mongoose');
+
+const subscriptionPlanSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  description: { type: String },
+  price: { type: Number, required: true, default: 0 },
+  duration_days: { type: Number, required: true, default: 30 },
+  event_limit: { type: Number, required: true, default: 1 },
+  is_active: { type: Boolean, default: true }
+}, {
+  timestamps: true
+});
+
+module.exports = mongoose.model('SubscriptionPlan', subscriptionPlanSchema);

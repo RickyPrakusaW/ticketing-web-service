@@ -1,32 +1,28 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class Event extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-    }
-  }
-  Event.init({
-    organizer_id: DataTypes.INTEGER,
-    category_id: DataTypes.INTEGER,
-    venue_id: DataTypes.INTEGER,
-    title: DataTypes.STRING,
-    description: DataTypes.TEXT,
-    event_date: DataTypes.DATE,
-    event_end_date: DataTypes.DATE,
-    poster_image: DataTypes.STRING,
-    status: DataTypes.STRING,
-    is_free: DataTypes.BOOLEAN
-  }, {
-    sequelize,
-    modelName: 'Event',
-  });
-  return Event;
-};
+const mongoose = require('mongoose');
+
+const ticketTypeSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  description: { type: String },
+  price: { type: Number, required: true, default: 0 },
+  quota: { type: Number, required: true },
+  sold: { type: Number, required: true, default: 0 },
+  status: { type: String, enum: ['available', 'sold_out', 'disabled'], default: 'available' }
+});
+
+const eventSchema = new mongoose.Schema({
+  organizer_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  category_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Category' },
+  venue_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Venue' },
+  title: { type: String, required: true },
+  description: { type: String },
+  event_date: { type: Date, required: true },
+  event_end_date: { type: Date },
+  poster_image: { type: String },
+  status: { type: String, enum: ['draft', 'published', 'closed', 'cancelled'], default: 'draft' },
+  is_free: { type: Boolean, default: false },
+  ticket_types: [ticketTypeSchema]
+}, {
+  timestamps: true
+});
+
+module.exports = mongoose.model('Event', eventSchema);

@@ -4,8 +4,13 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 
+const connectDB = require('./src/config/database');
+
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+// Connect to MongoDB
+connectDB();
 
 // Standard Middlewares
 app.use(cors());
@@ -16,6 +21,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // Serve static files for uploads
 app.use('/public/uploads', express.static('public/uploads'));
+
+// API Routes
+app.use('/api/v1', require('./src/routes'));
 
 // Tester Endpoint
 app.get('/', (req, res) => {

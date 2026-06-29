@@ -1,30 +1,16 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class Venue extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-    }
-  }
-  Venue.init({
-    name: DataTypes.STRING,
-    address: DataTypes.TEXT,
-    city: DataTypes.STRING,
-    latitude: DataTypes.DECIMAL,
-    longitude: DataTypes.DECIMAL,
-    capacity: DataTypes.INTEGER,
-    contact_person: DataTypes.STRING,
-    contact_phone: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'Venue',
-  });
-  return Venue;
-};
+const mongoose = require('mongoose');
+
+const venueSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  address: { type: String, required: true },
+  city: { type: String, required: true },
+  latitude: { type: Number },
+  longitude: { type: Number },
+  capacity: { type: Number, required: true },
+  contact_person: { type: String },
+  contact_phone: { type: String }
+}, {
+  timestamps: true
+});
+
+module.exports = mongoose.model('Venue', venueSchema);

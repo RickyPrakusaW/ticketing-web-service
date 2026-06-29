@@ -1,28 +1,15 @@
-require('dotenv').config();
+const mongoose = require('mongoose');
 
-module.exports = {
-  development: {
-    username: process.env.DB_USER || "root",
-    password: process.env.DB_PASS || null,
-    database: process.env.DB_NAME || "ticketing_event_db",
-    host: process.env.DB_HOST || "127.0.0.1",
-    port: process.env.DB_PORT || 3306,
-    dialect: "mysql"
-  },
-  test: {
-    username: process.env.DB_USER || "root",
-    password: process.env.DB_PASS || null,
-    database: process.env.DB_NAME || "ticketing_event_db_test",
-    host: process.env.DB_HOST || "127.0.0.1",
-    port: process.env.DB_PORT || 3306,
-    dialect: "mysql"
-  },
-  production: {
-    username: process.env.DB_USER || "root",
-    password: process.env.DB_PASS || null,
-    database: process.env.DB_NAME || "ticketing_event_db_prod",
-    host: process.env.DB_HOST || "127.0.0.1",
-    port: process.env.DB_PORT || 3306,
-    dialect: "mysql"
+const connectDB = async () => {
+  try {
+    const mongoURI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/ticketing_event_db';
+    const conn = await mongoose.connect(mongoURI);
+    console.log(`MongoDB Connected: ${conn.connection.host}/${conn.connection.name}`);
+    return conn;
+  } catch (error) {
+    console.error(`Error connecting to MongoDB: ${error.message}`);
+    process.exit(1);
   }
 };
+
+module.exports = connectDB;
