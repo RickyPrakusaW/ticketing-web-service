@@ -95,10 +95,10 @@ exports.login = async (req, res) => {
 
     // 4. Buat Token JWT
     const token = jwt.sign(
-      { 
-        id: user._id, 
+      {
+        id: user._id,
         role_id: user.role_id ? user.role_id._id : null,
-        role_name: user.role_id ? user.role_id.name : 'Unknown' 
+        role_name: user.role_id ? user.role_id.name : 'Unknown'
       },
       JWT_SECRET,
       { expiresIn: '1d' }

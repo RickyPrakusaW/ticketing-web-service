@@ -25,15 +25,15 @@ exports.getAllEvents = async (req, res) => {
 
 exports.createEvent = async (req, res) => {
   try {
-    const { 
-      title, 
-      description, 
-      start_time, 
+    const {
+      title,
+      description,
+      start_time,
       event_date,
-      end_time, 
+      end_time,
       event_end_date,
-      organizer_id, 
-      category_id, 
+      organizer_id,
+      category_id,
       venue_id,
       poster_url,
       poster_image,
