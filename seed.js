@@ -5,18 +5,14 @@ const {
   Role,
   User,
   Category,
-  Venue,
-  Event,
-  SubscriptionPlan,
-  OrganizerSubscription,
-  Order,
+  Hotel,
+  Booking,
   Payment,
-  UploadedFile,
   PaymentMethod
 } = require('./src/models');
 
 const seedDB = async () => {
-  const mongoURI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/ticketing_event_db';
+  const mongoURI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/hotel_management_db';
   console.log(`Connecting to database at ${mongoURI}...`);
   await mongoose.connect(mongoURI);
   console.log('Connected to MongoDB.');
@@ -27,40 +23,36 @@ const seedDB = async () => {
     await Role.deleteMany({});
     await User.deleteMany({});
     await Category.deleteMany({});
-    await Venue.deleteMany({});
-    await Event.deleteMany({});
-    await SubscriptionPlan.deleteMany({});
-    await OrganizerSubscription.deleteMany({});
-    await Order.deleteMany({});
+    await Hotel.deleteMany({});
+    await Booking.deleteMany({});
     await Payment.deleteMany({});
-    await UploadedFile.deleteMany({});
     await PaymentMethod.deleteMany({});
     console.log('All collections cleared successfully.');
 
     // 2. Insert Roles
     console.log('Seeding Roles...');
     const roles = await Role.insertMany([
-      { name: 'Admin', description: 'Kelola sistem' },
-      { name: 'Organizer', description: 'Buat event' },
-      { name: 'Customer', description: 'Beli tiket' }
+      { name: 'Admin', description: 'Kelola sistem hotel secara keseluruhan' },
+      { name: 'Hotel Manager', description: 'Kelola pendaftaran hotel, kamar, dan check-in tamu' },
+      { name: 'Customer', description: 'Melakukan pemesanan/booking kamar hotel' }
     ]);
     const roleAdmin = roles.find(r => r.name === 'Admin');
-    const roleOrganizer = roles.find(r => r.name === 'Organizer');
+    const roleManager = roles.find(r => r.name === 'Hotel Manager');
     const roleCustomer = roles.find(r => r.name === 'Customer');
 
     // 3. Insert Users (Password is hashed)
     console.log('Seeding Users...');
     const hashedPass = await bcrypt.hash('password123', 10);
     const users = await User.insertMany([
-      { role_id: roleAdmin._id, full_name: 'Super Admin', email: 'admin@event.com', password: hashedPass, phone: '081122334455', is_active: true },
-      { role_id: roleOrganizer._id, full_name: 'Java Jazz Group', email: 'info@javajazz.com', password: hashedPass, phone: '08123456789', is_active: true },
-      { role_id: roleOrganizer._id, full_name: 'Tech Conference Organizer', email: 'contact@techconf.id', password: hashedPass, phone: '08129876543', is_active: true },
+      { role_id: roleAdmin._id, full_name: 'Super Admin', email: 'admin@hotel.com', password: hashedPass, phone: '081122334455', is_active: true },
+      { role_id: roleManager._id, full_name: 'Manager Grand Hyatt', email: 'manager.grand@hotel.com', password: hashedPass, phone: '08123456789', is_active: true },
+      { role_id: roleManager._id, full_name: 'Manager Aston Hotel', email: 'manager.aston@hotel.com', password: hashedPass, phone: '08129876543', is_active: true },
       { role_id: roleCustomer._id, full_name: 'Budi Santoso', email: 'budi@gmail.com', password: hashedPass, phone: '085511223344', is_active: true },
       { role_id: roleCustomer._id, full_name: 'Siti Aminah', email: 'siti@gmail.com', password: hashedPass, phone: '085544332211', is_active: true },
       { role_id: roleCustomer._id, full_name: 'Rendi Wijaya', email: 'rendi@gmail.com', password: hashedPass, phone: '085599887766', is_active: true }
     ]);
-    const userOrganizerJazz = users.find(u => u.email === 'info@javajazz.com');
-    const userOrganizerTech = users.find(u => u.email === 'contact@techconf.id');
+    const userManagerGrand = users.find(u => u.email === 'manager.grand@hotel.com');
+    const userManagerAston = users.find(u => u.email === 'manager.aston@hotel.com');
     const userCustomerBudi = users.find(u => u.email === 'budi@gmail.com');
     const userCustomerSiti = users.find(u => u.email === 'siti@gmail.com');
     const userCustomerRendi = users.find(u => u.email === 'rendi@gmail.com');
@@ -68,245 +60,195 @@ const seedDB = async () => {
     // 4. Insert Categories
     console.log('Seeding Categories...');
     const categories = await Category.insertMany([
-      { name: 'Musik & Konser', description: 'Konser musik live dan festival' },
-      { name: 'Seminar & Workshop', description: 'Kegiatan edukasi dan sharing session' },
-      { name: 'Olahraga', description: 'Pertandingan dan kompetisi olahraga' },
-      { name: 'Seni & Budaya', description: 'Pameran seni, wayang, dan teater' },
-      { name: 'Teknologi & IT', description: 'Seminar dan expo dunia teknologi' }
+      { name: 'Resort', description: 'Hotel peristirahatan dengan fasilitas rekreasi lengkap' },
+      { name: 'Business Hotel', description: 'Hotel penunjang aktivitas bisnis di pusat kota' },
+      { name: 'Boutique Hotel', description: 'Hotel bertema unik dengan estetika khusus' },
+      { name: 'Budget Hotel', description: 'Hotel ekonomis untuk perjalanan hemat' },
+      { name: 'Villa', description: 'Penginapan privat berukuran besar' }
     ]);
-    const catMusik = categories.find(c => c.name === 'Musik & Konser');
-    const catTech = categories.find(c => c.name === 'Teknologi & IT');
-    const catArt = categories.find(c => c.name === 'Seni & Budaya');
-    const catSeminar = categories.find(c => c.name === 'Seminar & Workshop');
-    const catSport = categories.find(c => c.name === 'Olahraga');
+    const catResort = categories.find(c => c.name === 'Resort');
+    const catBusiness = categories.find(c => c.name === 'Business Hotel');
+    const catBoutique = categories.find(c => c.name === 'Boutique Hotel');
+    const catBudget = categories.find(c => c.name === 'Budget Hotel');
 
-    // 5. Insert Venues
-    console.log('Seeding Venues...');
-    const venues = await Venue.insertMany([
-      { name: 'JIExpo Kemayoran', city: 'Jakarta', address: 'Jl. Benyamin Suaeb', capacity: 5000, contact_person: 'Mr. John', contact_phone: '081223344' },
-      { name: 'ICE BSD', city: 'Tangerang', address: 'BSD City', capacity: 10000, contact_person: 'Mrs. Jane', contact_phone: '081334455' },
-      { name: 'Stadion Utama GBK', city: 'Jakarta', address: 'Senayan', capacity: 75000, contact_person: 'Mr. Budi', contact_phone: '081445566' },
-      { name: 'Balai Kartini', city: 'Jakarta', address: 'Jl. Gatot Subroto', capacity: 3500, contact_person: 'Mrs. Ani', contact_phone: '081556677' },
-      { name: 'Jatim Expo', city: 'Surabaya', address: 'Jl. Ahmad Yani', capacity: 5000, contact_person: 'Mr. Dedi', contact_phone: '081667788' }
-    ]);
-    const venueJIExpo = venues.find(v => v.name === 'JIExpo Kemayoran');
-    const venueICE = venues.find(v => v.name === 'ICE BSD');
-    const venueGBK = venues.find(v => v.name === 'Stadion Utama GBK');
-    const venueKartini = venues.find(v => v.name === 'Balai Kartini');
-    const venueJatim = venues.find(v => v.name === 'Jatim Expo');
-
-    // 6. Insert Events (with embedded TicketTypes)
-    console.log('Seeding Events with embedded TicketTypes...');
-    const events = await Event.insertMany([
+    // 5. Insert Hotels (with embedded RoomTypes)
+    console.log('Seeding Hotels with embedded RoomTypes...');
+    const hotels = await Hotel.insertMany([
       {
-        organizer_id: userOrganizerJazz._id,
-        category_id: catMusik._id,
-        venue_id: venueJIExpo._id,
-        title: 'Jakarta Jazz Night 2024',
-        description: 'Malam spektakuler penuh irama jazz bersama musisi legendaris.',
-        event_date: new Date('2024-08-15T19:00:00Z'),
-        event_end_date: new Date('2024-08-15T23:00:00Z'),
-        poster_image: 'https://via.placeholder.com/300x400',
-        status: 'published',
-        is_free: false,
-        ticket_types: [
-          { name: 'Festival A', description: 'Area berdiri di depan stage', price: 250000, quota: 500, sold: 3 },
-          { name: 'VIP', description: 'Kursi baris depan, free merchandise', price: 750000, quota: 50, sold: 0 }
+        manager_id: userManagerGrand._id,
+        category_id: catBusiness._id,
+        name: 'Grand Hyatt Jakarta',
+        description: 'Hotel mewah bintang 5 yang terletak strategis di jantung kota Jakarta, terhubung langsung dengan Grand Indonesia.',
+        address: 'Jl. M.H. Thamrin No.1',
+        city: 'Jakarta',
+        latitude: -6.1950,
+        longitude: 106.8230,
+        rating: 4.8,
+        images: ['https://via.placeholder.com/600x400/hyatt1', 'https://via.placeholder.com/600x400/hyatt2'],
+        room_types: [
+          {
+            name: 'Deluxe King',
+            description: 'Kamar Deluxe seluas 45m2 dengan tempat tidur ukuran King, pemandangan kota, AC, TV, Wifi, Bathtub, dan gratis sarapan.',
+            price: 1800000,
+            capacity: 2,
+            total_rooms: 30,
+            booked_rooms: 1,
+            facilities: ['Free WiFi', 'AC', 'Bathtub', 'Flat Screen TV', 'Breakfast'],
+            status: 'available'
+          },
+          {
+            name: 'Grand Suite',
+            description: 'Kamar tipe Suite seluas 90m2 dengan ruang tamu terpisah, tempat tidur King, mini bar premium, jacuzzi privat, dan sarapan buffet.',
+            price: 4500000,
+            capacity: 3,
+            total_rooms: 10,
+            booked_rooms: 0,
+            facilities: ['Free WiFi', 'AC', 'Bathtub', 'Flat Screen TV', 'Living Room', 'Mini Bar', 'Breakfast'],
+            status: 'available'
+          }
         ]
       },
       {
-        organizer_id: userOrganizerTech._id,
-        category_id: catTech._id,
-        venue_id: venueICE._id,
-        title: 'AI Future Summit',
-        description: 'Membahas masa depan kecerdasan buatan dan implikasinya pada industri.',
-        event_date: new Date('2024-09-10T09:00:00Z'),
-        event_end_date: new Date('2024-09-10T17:00:00Z'),
-        poster_image: 'https://via.placeholder.com/300x400',
-        status: 'published',
-        is_free: false,
-        ticket_types: [
-          { name: 'Early Bird', description: 'Akses penuh harga miring', price: 150000, quota: 100, sold: 1 }
+        manager_id: userManagerAston._id,
+        category_id: catBudget._id,
+        name: 'Aston Favehotel Solo',
+        description: 'Hotel budget modern dan stylish di pusat kota Solo yang menyajikan kenyamanan dengan harga ekonomis.',
+        address: 'Jl. Adisucipto No.60',
+        city: 'Solo',
+        latitude: -7.5562,
+        longitude: 110.8021,
+        rating: 4.2,
+        images: ['https://via.placeholder.com/600x400/fave1'],
+        room_types: [
+          {
+            name: 'Standard Room',
+            description: 'Kamar Standard seluas 18m2 dengan tempat tidur Queen, AC, TV satelit, Wifi kencang, dan kamar mandi pancuran (shower).',
+            price: 400000,
+            capacity: 2,
+            total_rooms: 50,
+            booked_rooms: 2,
+            facilities: ['Free WiFi', 'AC', 'Shower', 'Flat Screen TV'],
+            status: 'available'
+          },
+          {
+            name: 'Superior Room',
+            description: 'Kamar Superior seluas 24m2 dengan pilihan tempat tidur Twin atau Double, AC, teh/kopi maker, Wifi, dan kulkas kecil.',
+            price: 600000,
+            capacity: 2,
+            total_rooms: 20,
+            booked_rooms: 0,
+            facilities: ['Free WiFi', 'AC', 'Shower', 'Flat Screen TV', 'Coffee Maker', 'Mini Fridge'],
+            status: 'available'
+          }
         ]
-      },
-      {
-        organizer_id: userOrganizerJazz._id,
-        category_id: catArt._id,
-        venue_id: venueKartini._id,
-        title: 'Wayang Heritage Show',
-        description: 'Pergelaran wayang kulit spektakuler semalam suntuk.',
-        event_date: new Date('2024-08-20T20:00:00Z'),
-        event_end_date: new Date('2024-08-21T04:00:00Z'),
-        poster_image: 'https://via.placeholder.com/300x400',
-        status: 'published',
-        is_free: false,
-        ticket_types: [
-          { name: 'Reguler', description: 'Tiket masuk standar', price: 100000, quota: 300, sold: 1 }
-        ]
-      },
-      {
-        organizer_id: userOrganizerTech._id,
-        category_id: catSeminar._id,
-        venue_id: venueJatim._id,
-        title: 'Digital Marketing 101',
-        description: 'Belajar strategi pemasaran digital dasar dari praktisi berpengalaman.',
-        event_date: new Date('2024-10-05T10:00:00Z'),
-        event_end_date: new Date('2024-10-05T15:00:00Z'),
-        poster_image: 'https://via.placeholder.com/300x400',
-        status: 'published',
-        is_free: false,
-        ticket_types: [
-          { name: 'Online Access', description: 'Akses streaming zoom', price: 50000, quota: 1000, sold: 1 }
-        ]
-      },
-      {
-        organizer_id: userOrganizerJazz._id,
-        category_id: catSport._id,
-        venue_id: venueGBK._id,
-        title: 'Indonesia Marathon 2024',
-        description: 'Lari bersama puluhan ribu pelari nasional dan internasional.',
-        event_date: new Date('2024-11-12T05:00:00Z'),
-        event_end_date: new Date('2024-11-12T12:00:00Z'),
-        poster_image: 'https://via.placeholder.com/300x400',
-        status: 'draft',
-        is_free: true,
-        ticket_types: []
       }
     ]);
-    const eventJazz = events.find(e => e.title === 'Jakarta Jazz Night 2024');
-    const eventAI = events.find(e => e.title === 'AI Future Summit');
-    const eventWayang = events.find(e => e.title === 'Wayang Heritage Show');
-    const eventMarketing = events.find(e => e.title === 'Digital Marketing 101');
+    const hotelHyatt = hotels.find(h => h.name === 'Grand Hyatt Jakarta');
+    const hotelAston = hotels.find(h => h.name === 'Aston Favehotel Solo');
 
-    // 7. Insert Subscription Plans
-    console.log('Seeding SubscriptionPlans...');
-    const plans = await SubscriptionPlan.insertMany([
-      { name: 'Free', description: 'Paket gratis untuk mencoba', price: 0, duration_days: 30, event_limit: 1, is_active: true },
-      { name: 'Pro', description: 'Untuk organizer profesional', price: 99000, duration_days: 30, event_limit: 10, is_active: true },
-      { name: 'Enterprise', description: 'Tanpa batas event, support premium', price: 299000, duration_days: 30, event_limit: 999, is_active: true },
-      { name: 'Starter', description: 'Memulai dengan 3 event', price: 49000, duration_days: 30, event_limit: 3, is_active: true },
-      { name: 'Annual VIP', description: 'Langganan tahunan enterprise', price: 2500000, duration_days: 365, event_limit: 9999, is_active: true }
-    ]);
-
-    // 8. Insert Payment Methods
+    // 6. Insert Payment Methods
     console.log('Seeding PaymentMethods...');
     const payMethods = await PaymentMethod.insertMany([
-      { name: 'Transfer Bank', description: 'Manual Bank Transfer', provider: 'BCA', is_active: true },
-      { name: 'E-Wallet', description: 'Pembayaran instan e-wallet', provider: 'GoPay', is_active: true },
-      { name: 'Virtual Account', description: 'BNI Virtual Account', provider: 'BNI', is_active: true },
-      { name: 'Credit Card', description: 'Kartu kredit via gateway', provider: 'Midtrans', is_active: true },
-      { name: 'Retail', description: 'Bayar via minimarket terdekat', provider: 'Alfamart', is_active: true }
+      { name: 'Transfer Bank', description: 'Manual Bank Transfer via BCA/Mandiri', provider: 'BCA', is_active: true },
+      { name: 'E-Wallet', description: 'Instant payment via GoPay/OVO', provider: 'GoPay', is_active: true },
+      { name: 'Virtual Account', description: 'Automatic Bank Transfer Virtual Account', provider: 'BNI', is_active: true },
+      { name: 'Credit Card', description: 'Visa / Mastercard via Payment Gateway', provider: 'Midtrans', is_active: true }
     ]);
 
-    // 9. Insert Orders (using embedded Details, matching SQL seeds total amounts)
-    console.log('Seeding Orders...');
-    const ticketA = eventJazz.ticket_types.find(t => t.name === 'Festival A');
-    const ticketEarly = eventAI.ticket_types.find(t => t.name === 'Early Bird');
-    const ticketWayang = eventWayang.ticket_types.find(t => t.name === 'Reguler');
-    const ticketOnline = eventMarketing.ticket_types.find(t => t.name === 'Online Access');
+    // 7. Insert Bookings (using embedded details)
+    console.log('Seeding Bookings...');
+    const roomHyattDeluxe = hotelHyatt.room_types.find(r => r.name === 'Deluxe King');
+    const roomAstonStandard = hotelAston.room_types.find(r => r.name === 'Standard Room');
+    const roomAstonSuperior = hotelAston.room_types.find(r => r.name === 'Superior Room');
 
-    await Order.insertMany([
+    // Booking Dates helpers
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(14, 0, 0, 0); // Check-in time 14:00
+
+    const dayAfterTomorrow = new Date();
+    dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 3);
+    dayAfterTomorrow.setHours(12, 0, 0, 0); // Check-out time 12:00
+
+    const inFiveDays = new Date();
+    inFiveDays.setDate(inFiveDays.getDate() + 5);
+    inFiveDays.setHours(14, 0, 0, 0);
+
+    const inSixDays = new Date();
+    inSixDays.setDate(inSixDays.getDate() + 6);
+    inSixDays.setHours(12, 0, 0, 0);
+
+    await Booking.insertMany([
       {
         user_id: userCustomerBudi._id,
-        order_code: 'ORD-001',
-        event_id: eventJazz._id,
-        total_amount: 250000,
+        booking_code: 'BKG-GHJ-001',
+        hotel_id: hotelHyatt._id,
+        check_in_date: tomorrow,
+        check_out_date: dayAfterTomorrow,
+        total_nights: 2,
+        total_amount: 3600000, // 1 Room * 1.800.000 * 2 Nights
         payment_status: 'paid',
         payment_method: 'Transfer BCA',
         expired_at: new Date(Date.now() + 24 * 60 * 60 * 1000),
         paid_at: new Date(),
         details: [
           {
-            ticket_type_id: ticketA._id,
-            ticket_code: 'TIX-001-AAA',
-            qty: 1,
-            price: 250000,
-            subtotal: 250000,
+            room_type_id: roomHyattDeluxe._id,
+            qty_rooms: 1,
+            price_per_night: 1800000,
+            subtotal: 3600000,
+            guest_names: ['Budi Santoso', 'Andi Santoso'],
             status: 'active'
           }
         ]
       },
       {
         user_id: userCustomerSiti._id,
-        order_code: 'ORD-002',
-        event_id: eventJazz._id,
-        total_amount: 500000,
+        booking_code: 'BKG-AFS-002',
+        hotel_id: hotelAston._id,
+        check_in_date: inFiveDays,
+        check_out_date: inSixDays,
+        total_nights: 1,
+        total_amount: 800000, // 2 Rooms * 400.000 * 1 Night
         payment_status: 'pending',
         payment_method: 'GoPay',
-        expired_at: new Date(Date.now() + 24 * 60 * 60 * 1000),
+        expired_at: new Date(Date.now() + 2 * 60 * 60 * 1000), // 2 hours expiry
         details: [
           {
-            ticket_type_id: ticketA._id,
-            ticket_code: 'TIX-002-BBB',
-            qty: 2,
-            price: 250000,
-            subtotal: 500000,
+            room_type_id: roomAstonStandard._id,
+            qty_rooms: 2,
+            price_per_night: 400000,
+            subtotal: 800000,
+            guest_names: ['Siti Aminah', 'Aisyah Aminah'],
             status: 'active'
           }
         ]
       },
       {
         user_id: userCustomerRendi._id,
-        order_code: 'ORD-003',
-        event_id: eventAI._id,
-        total_amount: 150000,
-        payment_status: 'paid',
-        payment_method: 'Virtual Account',
-        expired_at: new Date(Date.now() + 24 * 60 * 60 * 1000),
-        paid_at: new Date(),
-        details: [
-          {
-            ticket_type_id: ticketEarly._id,
-            ticket_code: 'TIX-003-CCC',
-            qty: 1,
-            price: 150000,
-            subtotal: 150000,
-            status: 'active'
-          }
-        ]
-      },
-      {
-        user_id: userCustomerBudi._id,
-        order_code: 'ORD-004',
-        event_id: eventWayang._id,
-        total_amount: 100000,
+        booking_code: 'BKG-AFS-003',
+        hotel_id: hotelAston._id,
+        check_in_date: inFiveDays,
+        check_out_date: inSixDays,
+        total_nights: 1,
+        total_amount: 600000, // 1 Room * 600.000 * 1 Night
         payment_status: 'cancelled',
-        payment_method: 'OVO',
-        expired_at: new Date(Date.now() + 24 * 60 * 60 * 1000),
+        payment_method: 'Transfer Bank',
+        expired_at: new Date(Date.now() - 60 * 60 * 1000), // expired 1 hour ago
         details: [
           {
-            ticket_type_id: ticketWayang._id,
-            ticket_code: 'TIX-004-DDD',
-            qty: 1,
-            price: 100000,
-            subtotal: 100000,
+            room_type_id: roomAstonSuperior._id,
+            qty_rooms: 1,
+            price_per_night: 600000,
+            subtotal: 600000,
+            guest_names: ['Rendi Wijaya'],
             status: 'cancelled'
-          }
-        ]
-      },
-      {
-        user_id: userCustomerSiti._id,
-        order_code: 'ORD-005',
-        event_id: eventMarketing._id,
-        total_amount: 50000,
-        payment_status: 'paid',
-        payment_method: 'Kartu Kredit',
-        expired_at: new Date(Date.now() + 24 * 60 * 60 * 1000),
-        paid_at: new Date(),
-        details: [
-          {
-            ticket_type_id: ticketOnline._id,
-            ticket_code: 'TIX-005-EEE',
-            qty: 1,
-            price: 50000,
-            subtotal: 50000,
-            status: 'active'
           }
         ]
       }
     ]);
 
-    console.log('Database successfully seeded! 🌱');
+    console.log('Database successfully seeded with Hotel dummy data! 🌱');
   } catch (error) {
     console.error('Error seeding database:', error);
   } finally {

@@ -1,6 +1,6 @@
-# 📖 Panduan Menggunakan MongoDB & Mongoose (Event Ticketing)
+# 📖 Panduan Menggunakan MongoDB & Mongoose (Hotel Booking & Management)
 
-Halo! Catatan ini dibuat khusus untuk mempermudah pemahaman mengenai cara kerja **MongoDB** dan **Mongoose ODM** di dalam project Ticketing Event Web Service kita setelah migrasi dari SQL.
+Halo! Catatan ini dibuat khusus untuk mempermudah pemahaman mengenai cara kerja **MongoDB** dan **Mongoose ODM** di dalam project Hotel Booking & Management Web Service setelah migrasi dari sistem ticketing.
 
 ---
 
@@ -11,7 +11,7 @@ Di MongoDB, kita tidak mengenal baris (*row*) dan kolom (*column*), melainkan:
 2. **Collection:** Wadah berkumpulnya Dokumen (seperti Tabel di SQL).
 
 Salah satu kekuatan MongoDB adalah kita bisa menyematkan data (*embedded/nested docs*) secara langsung.
-> **Contoh:** Tiket (`ticket_types`) dan Detail Transaksi (`details`) tidak lagi disimpan di tabel terpisah dengan relasi rumit, melainkan menjadi array di dalam dokumen Event dan Order secara langsung.
+> **Contoh:** Tipe Kamar (`room_types`) dan Detail Transaksi (`details`) tidak lagi disimpan di tabel terpisah dengan relasi rumit, melainkan menjadi array di dalam dokumen **Hotel** dan **Booking** secara langsung.
 
 ---
 
@@ -24,18 +24,18 @@ Jika kamu menggunakan MongoDB Compass, kamu bisa melihat isi databasemu secara v
 ### 2. Konfigurasi .env
 Periksa file `.env` di root folder project, pastikan terdapat baris ini:
 ```env
-MONGODB_URI=mongodb://127.0.0.1:27017/ticketing_event_db
+MONGODB_URI=mongodb://127.0.0.1:27017/hotel_management_db
 ```
 
 ### 3. Jalankan Seeder MongoDB
-Untuk mengisi database dengan data dummy awal (Roles, Users, Categories, Venues, Events, dll) agar website bisa langsung dites, jalankan perintah berikut di terminal:
+Untuk mengisi database dengan data dummy awal (Roles, Users, Categories, Hotels, Bookings, dll) agar website bisa langsung dites, jalankan perintah berikut di terminal:
 
 ```bash
 node seed.js
 ```
 
 Perintah di atas akan otomatis:
-- Mengosongkan data lama di database `ticketing_event_db`.
+- Mengosongkan data lama di database `hotel_management_db`.
 - Membuat koleksi baru.
 - Memasukkan data default & dummy (termasuk membuat password ter-hash `password123`).
 
@@ -43,48 +43,54 @@ Perintah di atas akan otomatis:
 
 ## 🛠️ Cara Menggunakan Mongoose di Controller
 
-Berikut beberapa contoh perbandingan penulisan kode antara Sequelize (lama) dengan Mongoose (baru):
+Berikut beberapa contoh penulisan query menggunakan Mongoose khusus untuk sistem Hotel:
 
 ### 1. Mencari Satu Data (findOne)
-*   **Sequelize (Lama):**
-    ```javascript
-    const user = await User.findOne({ where: { email: email } });
-    ```
-*   **Mongoose (Baru):**
-    ```javascript
-    const user = await User.findOne({ email });
-    ```
+```javascript
+// Cari user berdasarkan email
+const user = await User.findOne({ email });
+```
 
 ### 2. Mencari Semua Data + Mempopulasikan Relasi (JOIN)
-*   **Sequelize (Lama):**
-    ```javascript
-    const users = await User.findAll({
-      include: [{ model: Role, as: 'Role' }]
-    });
-    ```
-*   **Mongoose (Baru):**
-    ```javascript
-    const users = await User.find().populate('role_id');
-    ```
+```javascript
+// Mengambil semua hotel beserta nama manajernya dan nama kategorinya
+const hotels = await Hotel.find()
+  .populate('manager_id', 'full_name email')
+  .populate('category_id', 'name');
+```
 
 ### 3. Membuat Data Baru (create)
-Syntax pembuatan data baru hampir sama persis:
 ```javascript
-const newUser = await User.create({
-  full_name: 'Budi Santoso',
-  email: 'budi@gmail.com',
-  password: hashedPassword,
-  role_id: '645a8df2f3e4c489c7d41f02' // Menggunakan ObjectId MongoDB
+const newHotel = await Hotel.create({
+  name: 'Hotel Grand Hyatt',
+  description: 'Hotel mewah bintang 5 di pusat kota.',
+  address: 'Jl. M.H. Thamrin No.1',
+  city: 'Jakarta',
+  manager_id: '645a8df2f3e4c489c7d41f02', // Menggunakan ObjectId Manager
+  category_id: '645a8df2f3e4c489c7d41f03', // Menggunakan ObjectId Kategori
+  room_types: [
+    {
+      name: 'Deluxe Room',
+      description: 'Kamar nyaman dengan pemandangan kota.',
+      price: 1500000,
+      capacity: 2,
+      total_rooms: 20,
+      booked_rooms: 0,
+      facilities: ['Free WiFi', 'AC', 'Breakfast'],
+      status: 'available'
+    }
+  ]
 });
 ```
 
 ---
 
 ## 🏁 Akun Dummy untuk Pengujian
+
 Setelah menjalankan `node seed.js`, kamu bisa masuk ke aplikasi menggunakan akun-akun berikut (semua password adalah: `password123`):
 
-1.  **Super Admin:** `admin@event.com` (role Admin)
-2.  **Organizer:** `info@javajazz.com` atau `contact@techconf.id` (role Organizer)
+1.  **Super Admin:** `admin@hotel.com` (role Admin)
+2.  **Hotel Manager:** `manager.grand@hotel.com` atau `manager.aston@hotel.com` (role Hotel Manager)
 3.  **Customer:** `budi@gmail.com`, `siti@gmail.com`, atau `rendi@gmail.com` (role Customer)
 
 Selamat belajar dan mencoba MongoDB! 🎉

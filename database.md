@@ -1,6 +1,6 @@
-# EVENT TICKETING MANAGEMENT DATABASE - DOKUMENTASI LENGKAP (MONGODB)
+# HOTEL BOOKING MANAGEMENT DATABASE - DOKUMENTASI LENGKAP (MONGODB)
 
-Dokumentasi ini menjelaskan rancangan database sistem manajemen tiket event berbasis NoSQL menggunakan **MongoDB** dan ODM **Mongoose**.
+Dokumentasi ini menjelaskan rancangan database sistem manajemen booking hotel berbasis NoSQL menggunakan **MongoDB** dan ODM **Mongoose**.
 
 ---
 
@@ -9,15 +9,15 @@ Dokumentasi ini menjelaskan rancangan database sistem manajemen tiket event berb
 Berbeda dengan database relasional (SQL) yang memecah data ke banyak tabel terpisah demi normalisasi, perancangan di MongoDB memanfaatkan keunggulan dokumen JSON yang fleksibel:
 
 1. **Embedded Documents (Skema Bersarang):**
-   - **Ticket Types:** Jenis-jenis tiket didefinisikan langsung di dalam dokumen `Event` sebagai array subdokumen. Ini menghemat operasi JOIN yang lambat saat melihat halaman event beserta kuota tiketnya.
-   - **Order Details:** Item-item pembelian tiket (detail qty, subtotal, kode e-ticket) langsung di-embed di dalam dokumen `Order`. Tidak perlu memisahkan `OrderHeader` dan `OrderDetail`.
+   - **Room Types:** Jenis-jenis kamar didefinisikan langsung di dalam dokumen `Hotel` sebagai array subdokumen. Ini menghemat operasi JOIN yang lambat saat melihat halaman hotel beserta tipe kamar dan ketersediaannya.
+   - **Booking Details:** Item-item pemesanan kamar (detail qty, harga per malam, subtotal, nama tamu) langsung di-embed di dalam dokumen `Booking`. Tidak perlu memisahkan `BookingHeader` dan `BookingDetail`.
 
 2. **References (Relasi Referensi):**
    - Menggunakan `ObjectId` untuk menunjuk dokumen pada koleksi lain (mirip Foreign Key), misalnya `role_id` di koleksi `User` yang merujuk ke koleksi `Role`.
 
 ---
 
-## 📂 DAFTAR KOLEKSI (11 Koleksi Utama)
+## 📂 DAFTAR KOLEKSI (7 Koleksi Utama)
 
 ### 1. **roles**
 Menyimpan peran/otoritas pengguna dalam sistem.
@@ -25,7 +25,7 @@ Menyimpan peran/otoritas pengguna dalam sistem.
 ```json
 {
   "_id": "ObjectId",
-  "name": "String",        // "Admin", "Organizer", "Customer"
+  "name": "String",        // "Admin", "Hotel Manager", "Customer"
   "description": "String", // Deskripsi hak akses role
   "createdAt": "Date",
   "updatedAt": "Date"
@@ -35,7 +35,7 @@ Menyimpan peran/otoritas pengguna dalam sistem.
 ---
 
 ### 2. **users**
-Menyimpan data pengguna (Admin, Organizer, Customer).
+Menyimpan data pengguna (Admin, Hotel Manager, Customer).
 
 ```json
 {
@@ -46,7 +46,6 @@ Menyimpan data pengguna (Admin, Organizer, Customer).
   "password": "String",    // Password ter-hash (bcryptjs)
   "phone": "String",       // Nomor telepon
   "profile_image": "String",// URL/Path foto profil
-  "bio": "String",         // Deskripsi profil singkat
   "is_active": "Boolean",  // Status aktif/nonaktif (default: true)
   "createdAt": "Date",
   "updatedAt": "Date"
@@ -56,14 +55,13 @@ Menyimpan data pengguna (Admin, Organizer, Customer).
 ---
 
 ### 3. **categories**
-Menyimpan kategori event (Musik, Seminar, Olahraga, dll).
+Menyimpan kategori hotel (Resort, Business Hotel, Boutique Hotel, Budget Hotel, Villa, dll).
 
 ```json
 {
   "_id": "ObjectId",
   "name": "String",        // Nama kategori (Index: Unique)
   "description": "String", // Deskripsi kategori
-  "icon_url": "String",    // URL icon representasi
   "createdAt": "Date",
   "updatedAt": "Date"
 }
@@ -71,51 +69,32 @@ Menyimpan kategori event (Musik, Seminar, Olahraga, dll).
 
 ---
 
-### 4. **venues**
-Menyimpan data lokasi/tempat penyelenggaraan event.
+### 4. **hotels**
+Menyimpan data hotel beserta tipe-tipe kamar yang tersedia.
 
 ```json
 {
   "_id": "ObjectId",
-  "name": "String",          // Nama gedung/lokasi
-  "address": "String",       // Alamat lengkap
-  "city": "String",          // Kota
-  "latitude": "Number",      // Koordinat lintang (opsional)
-  "longitude": "Number",     // Koordinat bujur (opsional)
-  "capacity": "Number",      // Kapasitas maksimum pengunjung
-  "contact_person": "String",// Nama penanggung jawab venue
-  "contact_phone": "String", // Nomor telepon penanggung jawab
-  "createdAt": "Date",
-  "updatedAt": "Date"
-}
-```
-
----
-
-### 5. **events**
-Menyimpan data event yang dibuat oleh Organizer beserta informasi jenis tiket.
-
-```json
-{
-  "_id": "ObjectId",
-  "organizer_id": "ObjectId", // Referensi -> users._id
+  "manager_id": "ObjectId",   // Referensi -> users._id (Hotel Manager)
   "category_id": "ObjectId",  // Referensi -> categories._id
-  "venue_id": "ObjectId",     // Referensi -> venues._id
-  "title": "String",          // Judul/Nama event
-  "description": "String",    // Deskripsi detail event
-  "event_date": "Date",       // Tanggal mulai
-  "event_end_date": "Date",   // Tanggal berakhir
-  "poster_image": "String",   // URL poster event
-  "status": "String",         // "draft", "published", "closed", "cancelled"
-  "is_free": "Boolean",       // Flag event gratis (default: false)
-  "ticket_types": [           // EMBEDDED SUBDOCUMENTS
+  "name": "String",           // Nama hotel
+  "description": "String",    // Deskripsi detail hotel
+  "address": "String",        // Alamat lengkap hotel
+  "city": "String",           // Kota lokasi hotel
+  "latitude": "Number",       // Koordinat lintang (opsional)
+  "longitude": "Number",      // Koordinat bujur (opsional)
+  "rating": "Number",         // Rating hotel (0-5, default: 0)
+  "images": ["String"],       // Array URL/Path gambar-gambar hotel
+  "room_types": [             // EMBEDDED SUBDOCUMENTS
     {
       "_id": "ObjectId",
-      "name": "String",       // "VIP", "Festival", "Early Bird"
-      "description": "String",// Deskripsi benefit/fasilitas tiket
-      "price": "Number",      // Harga tiket (0 jika gratis)
-      "quota": "Number",      // Jumlah kuota maksimal
-      "sold": "Number",       // Jumlah tiket terjual (default: 0)
+      "name": "String",       // "Standard", "Deluxe", "VIP Suite"
+      "description": "String",// Deskripsi detail/kelebihan tipe kamar
+      "price": "Number",      // Harga per malam
+      "capacity": "Number",   // Kapasitas tamu per kamar
+      "total_rooms": "Number",// Jumlah total kamar tipe ini yang dimiliki hotel
+      "booked_rooms": "Number",// Jumlah kamar yang sedang ter-booking (default: 0)
+      "facilities": ["String"],// Fasilitas kamar (e.g. ["Free WiFi", "AC", "Breakfast"])
       "status": "String"      // "available", "sold_out", "disabled"
     }
   ],
@@ -126,69 +105,33 @@ Menyimpan data event yang dibuat oleh Organizer beserta informasi jenis tiket.
 
 ---
 
-### 6. **subscription_plans**
-Menyimpan paket langganan bagi Organizer.
+### 5. **bookings**
+Menyimpan data pesanan booking kamar hotel (menggabungkan Booking Header dan Detail).
 
 ```json
 {
   "_id": "ObjectId",
-  "name": "String",          // "Free", "Pro", "Enterprise"
-  "description": "String",   // Deskripsi fitur
-  "price": "Number",         // Harga langganan bulanan
-  "duration_days": "Number", // Durasi aktif (default: 30 hari)
-  "event_limit": "Number",   // Maksimal event yang dapat dibuat
-  "is_active": "Boolean",    // Status keaktifan paket
-  "createdAt": "Date",
-  "updatedAt": "Date"
-}
-```
-
----
-
-### 7. **organizer_subscriptions**
-Menyimpan riwayat transaksi langganan dari Organizer.
-
-```json
-{
-  "_id": "ObjectId",
-  "organizer_id": "ObjectId",         // Referensi -> users._id
-  "subscription_plan_id": "ObjectId", // Referensi -> subscription_plans._id
-  "start_date": "Date",               // Tanggal mulai aktif
-  "end_date": "Date",                 // Tanggal berakhir
-  "status": "String",                 // "active", "expired", "cancelled"
-  "createdAt": "Date",
-  "updatedAt": "Date"
-}
-```
-
----
-
-### 8. **orders**
-Menyimpan data pesanan tiket (menggabungkan Order Header dan Detail).
-
-```json
-{
-  "_id": "ObjectId",
-  "user_id": "ObjectId",      // Referensi -> users._id (Customer)
-  "order_code": "String",     // Kode pemesanan unik (Index: Unique)
-  "event_id": "ObjectId",     // Referensi -> events._id
-  "total_amount": "Number",   // Total harga pesanan
-  "payment_status": "String", // "pending", "processing", "paid", "failed", "cancelled"
-  "payment_method": "String", // Metode bayar ("Transfer BCA", "GoPay")
-  "notes": "String",          // Catatan pembeli
-  "expired_at": "Date",       // Batas waktu pembayaran
-  "paid_at": "Date",          // Tanggal sukses bayar
-  "details": [                // EMBEDDED SUBDOCUMENTS (Order Details)
+  "user_id": "ObjectId",       // Referensi -> users._id (Customer)
+  "booking_code": "String",    // Kode booking unik (Index: Unique)
+  "hotel_id": "ObjectId",      // Referensi -> hotels._id
+  "check_in_date": "Date",     // Tanggal Check-in
+  "check_out_date": "Date",    // Tanggal Check-out
+  "total_nights": "Number",    // Jumlah malam menginap
+  "total_amount": "Number",    // Total biaya booking
+  "payment_status": "String",  // "pending", "paid", "failed", "cancelled"
+  "payment_method": "String",  // Metode bayar ("Transfer BCA", "GoPay")
+  "notes": "String",           // Catatan tambahan dari tamu
+  "expired_at": "Date",        // Batas waktu pembayaran
+  "paid_at": "Date",           // Tanggal sukses bayar
+  "details": [                 // EMBEDDED SUBDOCUMENTS (Booking Details)
     {
       "_id": "ObjectId",
-      "ticket_type_id": "ObjectId", // ID ticket_type di dalam dokumen Event
-      "ticket_code": "String",      // Kode unik tiket (Index: Unique)
-      "qty": "Number",              // Jumlah tiket yang dibeli
-      "price": "Number",            // Harga tiket saat dibeli
-      "subtotal": "Number",         // qty * price
-      "status": "String",           // "active", "used", "cancelled"
-      "qr_code": "String",          // String QR Code (Base64) untuk e-ticket
-      "checked_in_at": "Date"       // Tanggal penukaran tiket di venue
+      "room_type_id": "ObjectId", // ID room_type di dalam dokumen Hotel
+      "qty_rooms": "Number",      // Jumlah kamar yang dipesan
+      "price_per_night": "Number",// Harga per malam saat dipesan
+      "subtotal": "Number",       // qty_rooms * price_per_night * total_nights
+      "guest_names": ["String"],  // Nama-nama tamu yang menginap
+      "status": "String"          // "active", "checked_in", "checked_out", "cancelled"
     }
   ],
   "createdAt": "Date",
@@ -198,13 +141,13 @@ Menyimpan data pesanan tiket (menggabungkan Order Header dan Detail).
 
 ---
 
-### 9. **payments**
-Menyimpan log transaksi terintegrasi dengan Payment Gateway (seperti Midtrans).
+### 6. **payments**
+Menyimpan log transaksi pembayaran terintegrasi dengan Payment Gateway (seperti Midtrans).
 
 ```json
 {
   "_id": "ObjectId",
-  "order_id": "ObjectId",       // Referensi -> orders._id
+  "booking_id": "ObjectId",     // Referensi -> bookings._id
   "provider": "String",         // "Midtrans", "Xendit", dll
   "transaction_id": "String",   // ID transaksi dari payment gateway (Index: Unique)
   "gross_amount": "Number",     // Total dana diterima
@@ -219,26 +162,7 @@ Menyimpan log transaksi terintegrasi dengan Payment Gateway (seperti Midtrans).
 
 ---
 
-### 10. **uploaded_files**
-Menyimpan file yang diunggah ke sistem server.
-
-```json
-{
-  "_id": "ObjectId",
-  "user_id": "ObjectId",   // Referensi -> users._id (nullable)
-  "event_id": "ObjectId",  // Referensi -> events._id (nullable)
-  "file_name": "String",   // Nama file asli
-  "file_path": "String",   // Path/URL penyimpanan file
-  "file_type": "String",   // e.g., "jpg", "png", "webp"
-  "file_size": "Number",   // Ukuran byte
-  "upload_type": "String", // "poster", "profile", "bukti_bayar", "other"
-  "createdAt": "Date"
-}
-```
-
----
-
-### 11. **payment_methods**
+### 7. **payment_methods**
 Menyimpan opsi metode pembayaran yang tersedia di sistem.
 
 ```json
@@ -262,36 +186,35 @@ Untuk menjaga performa pencarian yang tinggi, indeks MongoDB diterapkan pada kol
 1. **Unique Indexes:**
    - `users.email`
    - `categories.name`
-   - `orders.order_code`
-   - `orders.details.ticket_code`
+   - `bookings.booking_code`
    - `payments.transaction_id`
    - `roles.name`
 
 2. **Query Filtering Indexes:**
-   - `events.status`
-   - `orders.payment_status`
+   - `hotels.city`
+   - `bookings.payment_status`
    - `users.role_id`
 
 ---
 
-## 🔄 REPLIKA DARI SQL VIEWS MENGGUNAKAN MONGO AGGREGATION
+## 🔄 REPLIKA MENGGUNAKAN MONGO AGGREGATION
 
 Dalam SQL sebelumnya terdapat Views untuk laporan. Di MongoDB kita dapat menggunakan **Aggregation Pipelines** untuk mendapatkan output serupa:
 
-### 1. Event dengan Info Organizer
-Menggabungkan data Event, User (Organizer), Category, dan Venue.
+### 1. Hotel dengan Info Manager dan Kategori
+Menggabungkan data Hotel, User (Manager), dan Category.
 
 ```javascript
-db.events.aggregate([
+db.hotels.aggregate([
   {
     $lookup: {
       from: "users",
-      localField: "organizer_id",
+      localField: "manager_id",
       foreignField: "_id",
-      as: "organizer"
+      as: "manager"
     }
   },
-  { $unwind: "$organizer" },
+  { $unwind: "$manager" },
   {
     $lookup: {
       from: "categories",
@@ -302,43 +225,33 @@ db.events.aggregate([
   },
   { $unwind: { path: "$category", preserveNullAndEmptyArrays: true } },
   {
-    $lookup: {
-      from: "venues",
-      localField: "venue_id",
-      foreignField: "_id",
-      as: "venue"
-    }
-  },
-  { $unwind: { path: "$venue", preserveNullAndEmptyArrays: true } },
-  {
     $project: {
-      title: 1,
-      event_date: 1,
-      status: 1,
-      organizer_name: "$organizer.full_name",
-      organizer_email: "$organizer.email",
-      category_name: "$category.name",
-      venue_name: "$venue.name"
+      name: 1,
+      city: 1,
+      rating: 1,
+      manager_name: "$manager.full_name",
+      manager_email: "$manager.email",
+      category_name: "$category.name"
     }
   }
 ]);
 ```
 
-### 2. Summary Laporan Penjualan Tiket per Event
-Mengambil ringkasan kuota dan penjualan tiket dari subdokumen `ticket_types` yang bersarang.
+### 2. Summary Laporan Penjualan Kamar per Hotel
+Mengambil ringkasan kuota dan penjualan kamar dari subdokumen `room_types` yang bersarang.
 
 ```javascript
-db.events.aggregate([
-  { $unwind: "$ticket_types" },
+db.hotels.aggregate([
+  { $unwind: "$room_types" },
   {
     $project: {
-      event_name: "$title",
-      ticket_type: "$ticket_types.name",
-      quota: "$ticket_types.quota",
-      sold: "$ticket_types.sold",
-      remaining: { $subtract: ["$ticket_types.quota", "$ticket_types.sold"] },
-      price: "$ticket_types.price",
-      total_revenue: { $multiply: ["$ticket_types.price", "$ticket_types.sold"] }
+      hotel_name: "$name",
+      room_type: "$room_types.name",
+      total_rooms: "$room_types.total_rooms",
+      booked_rooms: "$room_types.booked_rooms",
+      available_rooms: { $subtract: ["$room_types.total_rooms", "$room_types.booked_rooms"] },
+      price: "$room_types.price",
+      estimated_revenue: { $multiply: ["$room_types.price", "$room_types.booked_rooms"] }
     }
   }
 ]);

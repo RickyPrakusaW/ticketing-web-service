@@ -29,7 +29,7 @@ app.use('/api/v1', require('./src/routes'));
 app.get('/', (req, res) => {
   res.status(200).json({
     success: true,
-    message: "Event Ticketing API is running successfully",
+    message: "Hotel Management API is running successfully",
     data: null
   });
 });
