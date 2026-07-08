@@ -71,6 +71,5 @@ const bookingSchema = new mongoose.Schema(
 
 bookingSchema.index({ status: 1 });
 bookingSchema.index({ customerId: 1 });
-bookingSchema.index({ bookingCode: 1 }, { unique: true });
 
 module.exports = mongoose.model("Booking", bookingSchema);
