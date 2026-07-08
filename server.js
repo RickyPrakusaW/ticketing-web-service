@@ -3,8 +3,8 @@ const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
-
 const connectDB = require("./src/config/database");
+const errorHandler = require("./src/middlewares/errorHandler");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -42,6 +42,9 @@ app.use((req, res) => {
     data: null,
   });
 });
+
+// Global Error Handler
+app.use(errorHandler);
 
 // Start Server
 app.listen(PORT, () => {

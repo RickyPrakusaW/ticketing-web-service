@@ -161,3 +161,154 @@ Semua request menggunakan header `Content-Type: application/json`.
   "data": null
 }
 ```
+
+---
+
+## 5. Get Profile User
+* **Method**: `GET`
+* **URL**: `{{BASE_URL}}/api/v1/users/profile`
+* **Headers**: `Authorization: Bearer <token_jwt>`
+* **Deskripsi**: Mengambil detail profil user yang sedang login menggunakan token JWT. Semua role diperbolehkan.
+
+### Response Sukses (200 OK)
+```json
+{
+  "success": true,
+  "message": "Berhasil mengambil profil",
+  "data": {
+    "id": "665f1c2eb8c8a...",
+    "name": "Budi Santoso",
+    "email": "budi@example.com",
+    "role": "Customer",
+    "phone": null,
+    "avatarUrl": null
+  }
+}
+```
+
+### Response Gagal - Token Invalid/Expired (401 Unauthorized)
+```json
+{
+  "success": false,
+  "message": "Token tidak valid atau telah kedaluwarsa",
+  "data": null
+}
+```
+
+---
+
+## 6. Request Top-Up Saldo
+* **Method**: `POST`
+* **URL**: `{{BASE_URL}}/api/v1/wallets/topup`
+* **Headers**: `Authorization: Bearer <token_jwt>`
+* **Deskripsi**: Meminta pembuatan transaksi top-up saldo baru. Mengintegrasikan Midtrans Snap API untuk membuat token pembayaran. Jumlah minimal top-up adalah Rp10.000 dan maksimal Rp10.000.000.
+
+### Request Body (JSON)
+```json
+{
+  "amount": 100000
+}
+```
+
+### Response Sukses (201 Created)
+```json
+{
+  "success": true,
+  "message": "Permintaan top-up dibuat, silakan lakukan pembayaran",
+  "data": {
+    "topupId": "TOPUP-20260708-1783525937387-3860",
+    "amount": 100000,
+    "status": "pending",
+    "expiresAt": "2026-07-08T16:22:17.387Z",
+    "payment": {
+      "snapToken": "dbd362c9-374e-4b16-b2ac-808a94c92c7e",
+      "redirectUrl": "https://app.sandbox.midtrans.com/snap/v2/vtweb/dbd362c9-374e-4b16-b2ac-808a94c92c7e"
+    }
+  }
+}
+```
+
+---
+
+## 7. Get Wallet & History
+* **Method**: `GET`
+* **URL**: `{{BASE_URL}}/api/v1/wallets`
+* **Headers**: `Authorization: Bearer <token_jwt>`
+* **Deskripsi**: Mengambil saldo wallet saat ini beserta seluruh riwayat transaksi (mutasi ledger) diurutkan dari yang terbaru.
+
+### Response Sukses (200 OK)
+```json
+{
+  "success": true,
+  "message": "Berhasil mengambil data wallet",
+  "data": {
+    "balance": 150000,
+    "transactions": [
+      {
+        "id": "6a4e5f70d4bfaca2...",
+        "type": "topup",
+        "amount": 50000,
+        "balanceBefore": 100000,
+        "balanceAfter": 150000,
+        "referenceId": "TOPUP-20260708-1783525937387-3860",
+        "status": "success",
+        "createdAt": "2026-07-08T15:47:44.000Z"
+      }
+    ]
+  }
+}
+```
+
+---
+
+## 8. Midtrans Webhook (Notifikasi Status)
+* **Method**: `POST`
+* **URL**: `{{BASE_URL}}/api/v1/payments/webhook`
+* **Headers**: *Public (Tidak membutuhkan JWT, dikirim langsung oleh Midtrans)*
+* **Deskripsi**: Endpoint publik untuk menerima status transaksi dari Midtrans. Memvalidasi Signature Key (SHA-512) secara ketat. Mendukung penambahan saldo wallet secara atomik untuk prefix `TOPUP-`.
+
+### Request Body (dari Midtrans - JSON)
+```json
+{
+  "transaction_time": "2026-07-08 14:47:44",
+  "transaction_status": "settlement",
+  "status_message": "midtrans payment notification",
+  "status_code": "200",
+  "signature_key": "SHA512_hash_here",
+  "payment_type": "credit_card",
+  "order_id": "TOPUP-20260708-1783525937387-3860",
+  "merchant_id": "M448140254",
+  "gross_amount": "50000.00",
+  "fraud_status": "accept"
+}
+```
+
+### Response Sukses (200 OK)
+```json
+{
+  "success": true,
+  "message": "Webhook processed successfully"
+}
+```
+
+---
+
+## 9. Cancel Top-Up
+* **Method**: `PUT`
+* **URL**: `{{BASE_URL}}/api/v1/wallets/topup/:topupId/cancel`
+* **Headers**: `Authorization: Bearer <token_jwt>`
+* **Deskripsi**: Membatalkan permintaan top-up yang berstatus pending.
+
+### Response Sukses (200 OK)
+```json
+{
+  "success": true,
+  "message": "Top-up dibatalkan",
+  "data": {
+    "status": "cancelled"
+  }
+}
+```
+
+
+

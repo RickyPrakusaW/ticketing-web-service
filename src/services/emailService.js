@@ -47,4 +47,3 @@ exports.sendOTP = async (email, otpCode, name = "Pengguna") => {
     throw error;
   }
 };
-

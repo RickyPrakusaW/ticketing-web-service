@@ -1,5 +1,4 @@
 const { User } = require("../models");
-const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const emailService = require("../services/emailService");
 
@@ -8,7 +7,7 @@ const JWT_SECRET = process.env.JWT_SECRET || "supersecretkey";
 
 exports.register = async (req, res) => {
   try {
-    const { name, email, password, role } = req.body;
+    const { name, email, password, role, phone } = req.body;
 
     // 1. Validasi manual (sederhana & mudah dipahami)
     if (!name || !email || !password) {
@@ -39,6 +38,7 @@ exports.register = async (req, res) => {
       email,
       password,
       role: role || "Customer",
+      phone,
       otpCode,
       otpExpiresAt,
     });
@@ -60,6 +60,7 @@ exports.register = async (req, res) => {
         name: newUser.name,
         email: newUser.email,
         role: newUser.role,
+        phone: newUser.phone,
         isVerified: newUser.isVerified,
         otpExpiresAt: newUser.otpExpiresAt,
       },
