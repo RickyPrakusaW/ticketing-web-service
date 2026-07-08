@@ -1,17 +1,19 @@
-const Role = require('./Role');
-const User = require('./User');
-const Category = require('./Category');
-const Hotel = require('./Hotel');
-const Booking = require('./Booking');
-const Payment = require('./Payment');
-const PaymentMethod = require('./PaymentMethod');
+const User = require("./User");
+const Category = require("./Category");
+const Voucher = require("./Voucher");
+const Hotel = require("./Hotel");
+const Booking = require("./Booking");
+const Review = require("./Review");
+const Wallet = require("./Wallet");
+const WalletTransaction = require("./WalletTransaction");
 
 module.exports = {
-  Role,
   User,
   Category,
+  Voucher,
   Hotel,
   Booking,
-  Payment,
-  PaymentMethod
+  Review,
+  Wallet,
+  WalletTransaction,
 };

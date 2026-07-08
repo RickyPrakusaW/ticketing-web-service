@@ -1,9 +1,9 @@
-const { User } = require('../models');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+const { User } = require("../models");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 // Menggunakan hardcode JWT_SECRET karena ini project kuliah dan diminta mudah dipahami
-const JWT_SECRET = process.env.JWT_SECRET || 'supersecretkey';
+const JWT_SECRET = process.env.JWT_SECRET || "supersecretkey";
 
 exports.register = async (req, res) => {
   try {
@@ -13,8 +13,9 @@ exports.register = async (req, res) => {
     if (!full_name || !email || !password || !role_id) {
       return res.status(400).json({
         success: false,
-        message: 'Semua field wajib diisi (full_name, email, password, role_id)',
-        data: null
+        message:
+          "Semua field wajib diisi (full_name, email, password, role_id)",
+        data: null,
       });
     }
 
@@ -23,8 +24,8 @@ exports.register = async (req, res) => {
     if (existingUser) {
       return res.status(400).json({
         success: false,
-        message: 'Email sudah digunakan, silakan gunakan email lain',
-        data: null
+        message: "Email sudah digunakan, silakan gunakan email lain",
+        data: null,
       });
     }
 
@@ -36,25 +37,25 @@ exports.register = async (req, res) => {
       full_name,
       email,
       password: hashedPassword,
-      role_id
+      role_id,
     });
 
     return res.status(201).json({
       success: true,
-      message: 'Registrasi berhasil',
+      message: "Registrasi berhasil",
       data: {
         id: newUser._id,
         full_name: newUser.full_name,
         email: newUser.email,
-        role_id: newUser.role_id
-      }
+        role_id: newUser.role_id,
+      },
     });
   } catch (error) {
-    console.error('Error Register:', error);
+    console.error("Error Register:", error);
     return res.status(500).json({
       success: false,
-      message: 'Terjadi kesalahan pada server',
-      error: error.message
+      message: "Terjadi kesalahan pada server",
+      error: error.message,
     });
   }
 };
@@ -67,19 +68,19 @@ exports.login = async (req, res) => {
     if (!email || !password) {
       return res.status(400).json({
         success: false,
-        message: 'Email dan password wajib diisi',
-        data: null
+        message: "Email dan password wajib diisi",
+        data: null,
       });
     }
 
     // 2. Cari user di database beserta rolenya
-    const user = await User.findOne({ email }).populate('role_id');
+    const user = await User.findOne({ email }).populate("role_id");
 
     if (!user) {
       return res.status(404).json({
         success: false,
-        message: 'User tidak ditemukan',
-        data: null
+        message: "User tidak ditemukan",
+        data: null,
       });
     }
 
@@ -88,8 +89,8 @@ exports.login = async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).json({
         success: false,
-        message: 'Password salah',
-        data: null
+        message: "Password salah",
+        data: null,
       });
     }
 
@@ -98,32 +99,31 @@ exports.login = async (req, res) => {
       {
         id: user._id,
         role_id: user.role_id ? user.role_id._id : null,
-        role_name: user.role_id ? user.role_id.name : 'Unknown'
+        role_name: user.role_id ? user.role_id.name : "Unknown",
       },
       JWT_SECRET,
-      { expiresIn: '1d' }
+      { expiresIn: "1d" },
     );
 
     return res.status(200).json({
       success: true,
-      message: 'Login berhasil',
+      message: "Login berhasil",
       data: {
         token,
         user: {
           id: user._id,
           full_name: user.full_name,
           email: user.email,
-          role_id: user.role_id ? user.role_id._id : null
-        }
-      }
+          role_id: user.role_id ? user.role_id._id : null,
+        },
+      },
     });
-
   } catch (error) {
-    console.error('Error Login:', error);
+    console.error("Error Login:", error);
     return res.status(500).json({
       success: false,
-      message: 'Terjadi kesalahan pada server',
-      error: error.message
+      message: "Terjadi kesalahan pada server",
+      error: error.message,
     });
   }
 };

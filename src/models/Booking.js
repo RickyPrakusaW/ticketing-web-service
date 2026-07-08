@@ -1,92 +1,59 @@
 const mongoose = require('mongoose');
 
-const BookingDetailSchema = new mongoose.Schema({
-  room_type_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true
-  },
-  qty_rooms: {
-    type: Number,
-    required: true,
-    min: 1
-  },
-  price_per_night: {
-    type: Number,
-    required: true,
-    min: 0
-  },
-  subtotal: {
-    type: Number,
-    required: true,
-    min: 0
-  },
-  guest_names: [{
-    type: String,
-    trim: true
-  }],
-  status: {
-    type: String,
-    default: 'active',
-    enum: ['active', 'checked_in', 'checked_out', 'cancelled']
-  }
+const bookingDetailSchema = new mongoose.Schema({
+  roomTypeId: { type: mongoose.Schema.Types.ObjectId, required: true },
+  roomTypeName: { type: String, required: true },
+  pricePerNight: { type: Number, required: true },
+  quantity: { type: Number, required: true, min: 1 },
+  nights: { type: Number, required: true, min: 1 },
+  subtotal: { type: Number, required: true },
 });
 
-const BookingSchema = new mongoose.Schema({
-  user_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
+const bookingSchema = new mongoose.Schema(
+  {
+    bookingCode: { type: String, required: true, unique: true },
+    customerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    hotelId: { type: mongoose.Schema.Types.ObjectId, ref: 'Hotel', required: true },
+    checkInDate: { type: Date, required: true },
+    checkOutDate: { type: Date, required: true },
+    details: [bookingDetailSchema],
+    subtotal: { type: Number, required: true },
+    voucherCode: { type: String, default: null },
+    discountAmount: { type: Number, default: 0 },
+    totalAmount: { type: Number, required: true },
+    // metode bayar: "wallet" = potong saldo Wallet atomik, "midtrans" = Snap token seperti biasa
+    paymentMethod: { type: String, enum: ['wallet', 'midtrans'], required: true, default: 'midtrans' },
+    status: {
+      type: String,
+      enum: [
+        'pending_payment',
+        'confirmed',
+        'expired',
+        'cancelled',
+        'refund_requested',
+        'refunded',
+        'checked_in',
+        'checked_out',
+      ],
+      default: 'pending_payment',
+    },
+    expiresAt: { type: Date, required: true },
+    payment: {
+      snapToken: { type: String, default: null },
+      redirectUrl: { type: String, default: null },
+      transactionId: { type: String, default: null },
+      paidAt: { type: Date, default: null },
+    },
+    // relasi opsional ke baris ledger WalletTransaction (pembayaran atau refund lewat wallet)
+    walletTransactionId: { type: mongoose.Schema.Types.ObjectId, ref: 'WalletTransaction', default: null },
+    qrCode: { type: String, default: null },
+    isDeleted: { type: Boolean, default: false },
   },
-  booking_code: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true
-  },
-  hotel_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Hotel',
-    required: true
-  },
-  check_in_date: {
-    type: Date,
-    required: true
-  },
-  check_out_date: {
-    type: Date,
-    required: true
-  },
-  total_nights: {
-    type: Number,
-    required: true,
-    min: 1
-  },
-  total_amount: {
-    type: Number,
-    required: true,
-    min: 0
-  },
-  payment_status: {
-    type: String,
-    default: 'pending',
-    enum: ['pending', 'paid', 'failed', 'cancelled']
-  },
-  payment_method: {
-    type: String
-  },
-  notes: {
-    type: String
-  },
-  expired_at: {
-    type: Date,
-    required: true
-  },
-  paid_at: {
-    type: Date
-  },
-  details: [BookingDetailSchema]
-}, {
-  timestamps: true
-});
+  { timestamps: true }
+);
 
-module.exports = mongoose.model('Booking', BookingSchema);
+bookingSchema.index({ status: 1 });
+bookingSchema.index({ customerId: 1 });
+bookingSchema.index({ bookingCode: 1 }, { unique: true });
+
+module.exports = mongoose.model('Booking', bookingSchema);
