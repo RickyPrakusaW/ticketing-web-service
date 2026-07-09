@@ -1,0 +1,38 @@
+Membuat dokumentasi API yang benar di Postman sebenarnya bukan sekadar menumpuk daftar request, melainkan menyusunnya agar orang lain (seperti dosen atau anggota tim) bisa langsung paham cara memakainya tanpa harus membaca source code backend.
+Di Postman, dokumentasi otomatis terbentuk dari bagaimana kita menyusun Collection, Description, Variables, dan Examples. Berikut adalah panduan langkah demi langkah cara membuat dokumentasi API yang rapi, profesional, dan sesuai dengan standar penilaian:
+1. Merapikan Struktur Koleksi dan Penamaan Rute
+Jangan menyatukan semua request dalam satu folder besar. Kelompokkan berdasarkan modul seperti yang sudah dimulai oleh temanmu di file routers.md.
+•	Buat Folder Utama (Contoh: 3. Hotels).
+•	Di dalam folder tersebut, buat sub-folder jika cakupannya luas, atau langsung masukkan request dengan penamaan yang informatif, misalnya:
+o	GET - Mengambil Semua Daftar Hotel
+o	POST - Menambahkan Properti Hotel Baru
+o	GET - Mengambil Detail Informasi Hotel berdasarkan ID
+o	PUT - Memperbarui Informasi Fasilitas Hotel
+o	DELETE - Menonaktifkan Data Hotel (Soft Delete)
+2. Memanfaatkan Fitur Deskripsi (Markdown)
+Setiap folder dan request di Postman memiliki kolom Description di panel sebelah kanan atau di bawah nama request. Gunakan kolom ini untuk menulis penjelasan singkat menggunakan format Markdown.
+•	Di tingkat folder: Tulis deskripsi singkat mengenai modul tersebut dan siapa saja role yang diizinkan mengaksesnya (misal: "Modul ini digunakan untuk mengelola data master hotel. Endpoint POST, PUT, dan DELETE hanya dapat diakses oleh Admin dan HotelManager").
+•	Di tingkat request: Tulis penjelasan mengenai apa fungsi endpoint tersebut, parameter apa yang wajib diisi, dan format data yang diharapkan.
+3. Menggunakan Variabel Lingkungan (Environment/Collection Variables)
+Seperti yang dibahas sebelumnya, hindari menulis URL mentah seperti http://localhost:3001 di setiap request.
+•	Gunakan variabel penampung seperti {{BASE_URL}}.
+•	Jika endpoint membutuhkan ID dinamis, jangan ditulis manual. Gunakan parameter jalur (path variables) di kolom URL Postman, contohnya: {{BASE_URL}}/api/v1/hotels/:id. Nanti Postman akan otomatis menyediakan tabel Params di bawahnya sehingga dosen tinggal mengisi nilai id di tabel tersebut tanpa merusak struktur URL utama.
+4. Dokumentasi Bagian Body (x-www-form-urlencoded)
+Karena pengujian dilakukan menggunakan format x-www-form-urlencoded, dokumentasikan setiap field dengan memanfaatkan kolom Description yang ada di sebelah kanan kolom Key dan Value pada tab Body Postman:
+•	name | Value: Hotel Grand | Description: (Wajib) Nama properti hotel, tipe string.
+•	categoryId | Value: 64b5... | Description: (Wajib) ID Kategori yang valid dari database.
+•	isFeatured | Value: true | Description: (Opsional) Status rekomendasi hotel, default false.
+Menulis deskripsi pada tiap key akan membuat tabel dokumentasi terbaca dengan sangat jelas saat diekspor atau dilihat dalam mode dokumentasi web.
+5. Menyimpan Respons sebagai "Example" (Kunci Dokumentasi yang Baik)
+Ini adalah poin paling krusial yang sering dilewatkan. Dokumentasi API dinilai bagus jika pembaca bisa melihat contoh respons data tanpa harus mengirim request secara langsung ke server.
+•	Jalankan server backend dan lakukan pengujian request di Postman (misal melakukan POST tambah hotel).
+•	Ketika respons sukses (201 Created) muncul di panel bawah, klik tombol Save Response di pojok kanan atas panel respons, lalu pilih Save as example.
+•	Lakukan hal yang sama untuk skenario eror (misal sengaja mengosongkan nama hotel untuk memicu error validasi Joi 400 Bad Request), lalu simpan respons eror tersebut sebagai contoh terpisah.
+Postman akan menyimpan cuplikan respons tersebut di bawah request terkait. Saat dokumentasi dibuka, pembaca bisa langsung melihat simulasi respons sukses dan gagalnya.
+Cara Melihat Hasil Akhir Dokumentasi
+Setelah semua folder terisi, variabel diatur, deskripsi ditulis, dan example response disimpan, kamu bisa melihat wujud dokumentasi webnya dengan cara:
+1.	Klik ikon titik tiga (...) di samping nama koleksi utama Project-Hotel-Management.
+2.	Pilih menu View documentation.
+3.	Postman akan membuka halaman khusus yang menyusun seluruh teks Markdown, tabel parameter body x-www-form-urlencoded, kode URL, hingga contoh respons JSON secara otomatis menjadi satu halaman web yang sangat rapi.
+Halaman dokumentasi inilah yang nantinya bisa kamu tunjukkan kepada dosen saat presentasi proyek untuk membuktikan bahwa kriteria dokumentasi 10 poin sudah dipenuhi dengan sempurna.
+

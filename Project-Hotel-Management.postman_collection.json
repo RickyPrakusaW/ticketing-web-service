@@ -9,6 +9,7 @@
   "item": [
     {
       "name": "1. Auth & Security",
+      "description": "Modul untuk registrasi, verifikasi OTP, pengiriman ulang OTP, dan login pengguna.",
       "item": [
         {
           "name": "1.1 Register",
@@ -19,27 +20,44 @@
                 "method": "POST",
                 "header": [],
                 "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"name\": \"Ricky prakusa\",\r\n  \"email\": \"rickyprakusa281@gmail.com\",\r\n  \"password\": \"Password123!\",\r\n  \"role\": \"Customer\",\r\n  \"phone\": \"08123456789\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "name",
+                      "value": "Ricky prakusa",
+                      "type": "text",
+                      "description": "(Wajib) Nama lengkap pengguna"
+                    },
+                    {
+                      "key": "email",
+                      "value": "rickyprakusa281@gmail.com",
+                      "type": "text",
+                      "description": "(Wajib) Email aktif/terdaftar"
+                    },
+                    {
+                      "key": "password",
+                      "value": "Password123!",
+                      "type": "text",
+                      "description": "(Wajib) Kata sandi akun"
+                    },
+                    {
+                      "key": "role",
+                      "value": "Customer",
+                      "type": "text",
+                      "description": "(Opsional) Peran akun (Customer, HotelManager, Admin)"
+                    },
+                    {
+                      "key": "phone",
+                      "value": "08123456789",
+                      "type": "text",
+                      "description": "(Wajib) Nomor telepon aktif"
                     }
-                  }
+                  ]
                 },
                 "url": {
-                  "raw": "http://localhost:3000/api/v1/auth/register",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "3000",
-                  "path": [
-                    "api",
-                    "v1",
-                    "auth",
-                    "register"
-                  ]
+                  "raw": "{{BASE_URL}}/api/v1/auth/register",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["api", "v1", "auth", "register"]
                 }
               },
               "response": []
@@ -50,27 +68,44 @@
                 "method": "POST",
                 "header": [],
                 "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"name\": \"Ricky prakusa\",\r\n  \"email\": \"rickyprakusa281@gmail.com\",\r\n  \"password\": \"Password123!\",\r\n  \"role\": \"Penjual\",\r\n  \"phone\": \"08123456789\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "name",
+                      "value": "Ricky prakusa",
+                      "type": "text",
+                      "description": "(Wajib) Nama lengkap pengguna"
+                    },
+                    {
+                      "key": "email",
+                      "value": "rickyprakusa281@gmail.com",
+                      "type": "text",
+                      "description": "(Wajib) Email aktif/terdaftar"
+                    },
+                    {
+                      "key": "password",
+                      "value": "Password123!",
+                      "type": "text",
+                      "description": "(Wajib) Kata sandi akun"
+                    },
+                    {
+                      "key": "role",
+                      "value": "Penjual",
+                      "type": "text",
+                      "description": "(Opsional) Peran akun (Customer, HotelManager, Admin)"
+                    },
+                    {
+                      "key": "phone",
+                      "value": "08123456789",
+                      "type": "text",
+                      "description": "(Wajib) Nomor telepon aktif"
                     }
-                  }
+                  ]
                 },
                 "url": {
-                  "raw": "http://localhost:3000/api/v1/auth/register",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "3000",
-                  "path": [
-                    "api",
-                    "v1",
-                    "auth",
-                    "register"
-                  ]
+                  "raw": "{{BASE_URL}}/api/v1/auth/register",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["api", "v1", "auth", "register"]
                 }
               },
               "response": []
@@ -81,27 +116,44 @@
                 "method": "POST",
                 "header": [],
                 "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"name\": \"Ricky prakusa\",\r\n  \"email\": \"rickyprakusa281@gmail.com\",\r\n  \"password\": \"Password123!\",\r\n  \"role\": \"Customer\",\r\n  \"phone\": \"08123456789\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "name",
+                      "value": "Ricky prakusa",
+                      "type": "text",
+                      "description": "(Wajib) Nama lengkap pengguna"
+                    },
+                    {
+                      "key": "email",
+                      "value": "rickyprakusa281@gmail.com",
+                      "type": "text",
+                      "description": "(Wajib) Email aktif/terdaftar"
+                    },
+                    {
+                      "key": "password",
+                      "value": "Password123!",
+                      "type": "text",
+                      "description": "(Wajib) Kata sandi akun"
+                    },
+                    {
+                      "key": "role",
+                      "value": "Customer",
+                      "type": "text",
+                      "description": "(Opsional) Peran akun (Customer, HotelManager, Admin)"
+                    },
+                    {
+                      "key": "phone",
+                      "value": "08123456789",
+                      "type": "text",
+                      "description": "(Wajib) Nomor telepon aktif"
                     }
-                  }
+                  ]
                 },
                 "url": {
-                  "raw": "http://localhost:3000/api/v1/auth/register",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "3000",
-                  "path": [
-                    "api",
-                    "v1",
-                    "auth",
-                    "register"
-                  ]
+                  "raw": "{{BASE_URL}}/api/v1/auth/register",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["api", "v1", "auth", "register"]
                 }
               },
               "response": []
@@ -112,27 +164,44 @@
                 "method": "POST",
                 "header": [],
                 "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"name\": \"\",\r\n  \"email\": \"\",\r\n  \"password\": \"\",\r\n  \"role\": \"\",\r\n  \"phone\": \"\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "name",
+                      "value": "",
+                      "type": "text",
+                      "description": "(Wajib) Nama lengkap pengguna"
+                    },
+                    {
+                      "key": "email",
+                      "value": "",
+                      "type": "text",
+                      "description": "(Wajib) Email aktif/terdaftar"
+                    },
+                    {
+                      "key": "password",
+                      "value": "",
+                      "type": "text",
+                      "description": "(Wajib) Kata sandi akun"
+                    },
+                    {
+                      "key": "role",
+                      "value": "",
+                      "type": "text",
+                      "description": "(Opsional) Peran akun (Customer, HotelManager, Admin)"
+                    },
+                    {
+                      "key": "phone",
+                      "value": "",
+                      "type": "text",
+                      "description": "(Wajib) Nomor telepon aktif"
                     }
-                  }
+                  ]
                 },
                 "url": {
-                  "raw": "http://localhost:3000/api/v1/auth/register",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "3000",
-                  "path": [
-                    "api",
-                    "v1",
-                    "auth",
-                    "register"
-                  ]
+                  "raw": "{{BASE_URL}}/api/v1/auth/register",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["api", "v1", "auth", "register"]
                 }
               },
               "response": []
@@ -143,27 +212,44 @@
                 "method": "POST",
                 "header": [],
                 "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"name\": \"Ricky prakusa\",\r\n  \"email\": \"rickyprakusa281\",\r\n  \"password\": \"Password123!\",\r\n  \"role\": \"Customer\",\r\n  \"phone\": \"08123456789\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "name",
+                      "value": "Ricky prakusa",
+                      "type": "text",
+                      "description": "(Wajib) Nama lengkap pengguna"
+                    },
+                    {
+                      "key": "email",
+                      "value": "rickyprakusa281",
+                      "type": "text",
+                      "description": "(Wajib) Email aktif/terdaftar"
+                    },
+                    {
+                      "key": "password",
+                      "value": "Password123!",
+                      "type": "text",
+                      "description": "(Wajib) Kata sandi akun"
+                    },
+                    {
+                      "key": "role",
+                      "value": "Customer",
+                      "type": "text",
+                      "description": "(Opsional) Peran akun (Customer, HotelManager, Admin)"
+                    },
+                    {
+                      "key": "phone",
+                      "value": "08123456789",
+                      "type": "text",
+                      "description": "(Wajib) Nomor telepon aktif"
                     }
-                  }
+                  ]
                 },
                 "url": {
-                  "raw": "http://localhost:3000/api/v1/auth/register",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "3000",
-                  "path": [
-                    "api",
-                    "v1",
-                    "auth",
-                    "register"
-                  ]
+                  "raw": "{{BASE_URL}}/api/v1/auth/register",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["api", "v1", "auth", "register"]
                 }
               },
               "response": []
@@ -174,27 +260,44 @@
                 "method": "POST",
                 "header": [],
                 "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"name\": \"R\",\r\n  \"email\": \"rickyprakusa281@gmail.com\",\r\n  \"password\": \"Password123!\",\r\n  \"role\": \"Customer\",\r\n  \"phone\": \"08123456789\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "name",
+                      "value": "R",
+                      "type": "text",
+                      "description": "(Wajib) Nama lengkap pengguna"
+                    },
+                    {
+                      "key": "email",
+                      "value": "rickyprakusa281@gmail.com",
+                      "type": "text",
+                      "description": "(Wajib) Email aktif/terdaftar"
+                    },
+                    {
+                      "key": "password",
+                      "value": "Password123!",
+                      "type": "text",
+                      "description": "(Wajib) Kata sandi akun"
+                    },
+                    {
+                      "key": "role",
+                      "value": "Customer",
+                      "type": "text",
+                      "description": "(Opsional) Peran akun (Customer, HotelManager, Admin)"
+                    },
+                    {
+                      "key": "phone",
+                      "value": "08123456789",
+                      "type": "text",
+                      "description": "(Wajib) Nomor telepon aktif"
                     }
-                  }
+                  ]
                 },
                 "url": {
-                  "raw": "http://localhost:3000/api/v1/auth/register",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "3000",
-                  "path": [
-                    "api",
-                    "v1",
-                    "auth",
-                    "register"
-                  ]
+                  "raw": "{{BASE_URL}}/api/v1/auth/register",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["api", "v1", "auth", "register"]
                 }
               },
               "response": []
@@ -213,27 +316,26 @@
                 "method": "POST",
                 "header": [],
                 "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"email\": \"rickyprakusa281@gmail.com\",\r\n  \"password\": \"Password123!\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "email",
+                      "value": "rickyprakusa281@gmail.com",
+                      "type": "text",
+                      "description": "(Wajib) Email aktif/terdaftar"
+                    },
+                    {
+                      "key": "password",
+                      "value": "Password123!",
+                      "type": "text",
+                      "description": "(Wajib) Kata sandi akun"
                     }
-                  }
+                  ]
                 },
                 "url": {
-                  "raw": "http://localhost:3000/api/v1/auth/login",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "3000",
-                  "path": [
-                    "api",
-                    "v1",
-                    "auth",
-                    "login"
-                  ]
+                  "raw": "{{BASE_URL}}/api/v1/auth/login",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["api", "v1", "auth", "login"]
                 }
               },
               "response": []
@@ -247,27 +349,26 @@
                 "method": "POST",
                 "header": [],
                 "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"email\": \"rickyprakusa2@gmail.com\",\r\n  \"password\": \"Password123!\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "email",
+                      "value": "rickyprakusa2@gmail.com",
+                      "type": "text",
+                      "description": "(Wajib) Email aktif/terdaftar"
+                    },
+                    {
+                      "key": "password",
+                      "value": "Password123!",
+                      "type": "text",
+                      "description": "(Wajib) Kata sandi akun"
                     }
-                  }
+                  ]
                 },
                 "url": {
-                  "raw": "http://localhost:3000/api/v1/auth/login",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "3000",
-                  "path": [
-                    "api",
-                    "v1",
-                    "auth",
-                    "login"
-                  ]
+                  "raw": "{{BASE_URL}}/api/v1/auth/login",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["api", "v1", "auth", "login"]
                 }
               },
               "response": []
@@ -281,27 +382,26 @@
                 "method": "POST",
                 "header": [],
                 "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"email\": \"\",\r\n  \"password\": \"\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "email",
+                      "value": "",
+                      "type": "text",
+                      "description": "(Wajib) Email aktif/terdaftar"
+                    },
+                    {
+                      "key": "password",
+                      "value": "",
+                      "type": "text",
+                      "description": "(Wajib) Kata sandi akun"
                     }
-                  }
+                  ]
                 },
                 "url": {
-                  "raw": "http://localhost:3000/api/v1/auth/login",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "3000",
-                  "path": [
-                    "api",
-                    "v1",
-                    "auth",
-                    "login"
-                  ]
+                  "raw": "{{BASE_URL}}/api/v1/auth/login",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["api", "v1", "auth", "login"]
                 }
               },
               "response": []
@@ -315,27 +415,26 @@
                 "method": "POST",
                 "header": [],
                 "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"email\": \"rickyprakusa281@gmail.com\",\r\n  \"password\": \"Password123=dg!\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "email",
+                      "value": "rickyprakusa281@gmail.com",
+                      "type": "text",
+                      "description": "(Wajib) Email aktif/terdaftar"
+                    },
+                    {
+                      "key": "password",
+                      "value": "Password123=dg!",
+                      "type": "text",
+                      "description": "(Wajib) Kata sandi akun"
                     }
-                  }
+                  ]
                 },
                 "url": {
-                  "raw": "http://localhost:3000/api/v1/auth/login",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "3000",
-                  "path": [
-                    "api",
-                    "v1",
-                    "auth",
-                    "login"
-                  ]
+                  "raw": "{{BASE_URL}}/api/v1/auth/login",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["api", "v1", "auth", "login"]
                 }
               },
               "response": []
@@ -354,27 +453,26 @@
                 "method": "POST",
                 "header": [],
                 "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"email\": \"rickyprakusa281@gmail.com\",\r\n  \"otpCode\": \"763080\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "email",
+                      "value": "rickyprakusa281@gmail.com",
+                      "type": "text",
+                      "description": "(Wajib) Email aktif/terdaftar"
+                    },
+                    {
+                      "key": "otpCode",
+                      "value": "763080",
+                      "type": "text",
+                      "description": "(Wajib) Kode verifikasi OTP 6 digit"
                     }
-                  }
+                  ]
                 },
                 "url": {
-                  "raw": "http://localhost:3000/api/v1/auth/verify-otp",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "3000",
-                  "path": [
-                    "api",
-                    "v1",
-                    "auth",
-                    "verify-otp"
-                  ]
+                  "raw": "{{BASE_URL}}/api/v1/auth/verify-otp",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["api", "v1", "auth", "verify-otp"]
                 }
               },
               "response": []
@@ -388,27 +486,26 @@
                 "method": "POST",
                 "header": [],
                 "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"email\": \"rickyprakusa281@gmail.com\",\r\n  \"otpCode\": \"397229\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "email",
+                      "value": "rickyprakusa281@gmail.com",
+                      "type": "text",
+                      "description": "(Wajib) Email aktif/terdaftar"
+                    },
+                    {
+                      "key": "otpCode",
+                      "value": "397229",
+                      "type": "text",
+                      "description": "(Wajib) Kode verifikasi OTP 6 digit"
                     }
-                  }
+                  ]
                 },
                 "url": {
-                  "raw": "http://localhost:3000/api/v1/auth/verify-otp",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "3000",
-                  "path": [
-                    "api",
-                    "v1",
-                    "auth",
-                    "verify-otp"
-                  ]
+                  "raw": "{{BASE_URL}}/api/v1/auth/verify-otp",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["api", "v1", "auth", "verify-otp"]
                 }
               },
               "response": []
@@ -422,27 +519,26 @@
                 "method": "POST",
                 "header": [],
                 "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"email\": \"rickyprakusa28@gmail.com\",\r\n  \"otpCode\": \"763080\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "email",
+                      "value": "rickyprakusa28@gmail.com",
+                      "type": "text",
+                      "description": "(Wajib) Email aktif/terdaftar"
+                    },
+                    {
+                      "key": "otpCode",
+                      "value": "763080",
+                      "type": "text",
+                      "description": "(Wajib) Kode verifikasi OTP 6 digit"
                     }
-                  }
+                  ]
                 },
                 "url": {
-                  "raw": "http://localhost:3000/api/v1/auth/verify-otp",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "3000",
-                  "path": [
-                    "api",
-                    "v1",
-                    "auth",
-                    "verify-otp"
-                  ]
+                  "raw": "{{BASE_URL}}/api/v1/auth/verify-otp",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["api", "v1", "auth", "verify-otp"]
                 }
               },
               "response": []
@@ -456,27 +552,26 @@
                 "method": "POST",
                 "header": [],
                 "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"email\": \"\",\r\n  \"otpCode\": \"\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "email",
+                      "value": "",
+                      "type": "text",
+                      "description": "(Wajib) Email aktif/terdaftar"
+                    },
+                    {
+                      "key": "otpCode",
+                      "value": "",
+                      "type": "text",
+                      "description": "(Wajib) Kode verifikasi OTP 6 digit"
                     }
-                  }
+                  ]
                 },
                 "url": {
-                  "raw": "http://localhost:3000/api/v1/auth/verify-otp",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "3000",
-                  "path": [
-                    "api",
-                    "v1",
-                    "auth",
-                    "verify-otp"
-                  ]
+                  "raw": "{{BASE_URL}}/api/v1/auth/verify-otp",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["api", "v1", "auth", "verify-otp"]
                 }
               },
               "response": []
@@ -490,27 +585,26 @@
                 "method": "POST",
                 "header": [],
                 "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"email\": \"rickyprakusa281@gmail.com\",\r\n  \"otpCode\": \"888319\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "email",
+                      "value": "rickyprakusa281@gmail.com",
+                      "type": "text",
+                      "description": "(Wajib) Email aktif/terdaftar"
+                    },
+                    {
+                      "key": "otpCode",
+                      "value": "888319",
+                      "type": "text",
+                      "description": "(Wajib) Kode verifikasi OTP 6 digit"
                     }
-                  }
+                  ]
                 },
                 "url": {
-                  "raw": "http://localhost:3000/api/v1/auth/verify-otp",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "3000",
-                  "path": [
-                    "api",
-                    "v1",
-                    "auth",
-                    "verify-otp"
-                  ]
+                  "raw": "{{BASE_URL}}/api/v1/auth/verify-otp",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["api", "v1", "auth", "verify-otp"]
                 }
               },
               "response": []
@@ -529,27 +623,26 @@
                 "method": "POST",
                 "header": [],
                 "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"email\": \"rickyprakusa281@gmail.com\",\r\n  \"password\": \"Password12!\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "email",
+                      "value": "rickyprakusa281@gmail.com",
+                      "type": "text",
+                      "description": "(Wajib) Email aktif/terdaftar"
+                    },
+                    {
+                      "key": "password",
+                      "value": "Password12!",
+                      "type": "text",
+                      "description": "(Wajib) Kata sandi akun"
                     }
-                  }
+                  ]
                 },
                 "url": {
-                  "raw": "http://localhost:3000/api/v1/auth/resend-otp",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "3000",
-                  "path": [
-                    "api",
-                    "v1",
-                    "auth",
-                    "resend-otp"
-                  ]
+                  "raw": "{{BASE_URL}}/api/v1/auth/resend-otp",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["api", "v1", "auth", "resend-otp"]
                 }
               },
               "response": []
@@ -563,27 +656,26 @@
                 "method": "POST",
                 "header": [],
                 "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"email\": \"rickyprakusa28@gmail.com\",\r\n  \"password\": \"Password123!\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "email",
+                      "value": "rickyprakusa28@gmail.com",
+                      "type": "text",
+                      "description": "(Wajib) Email aktif/terdaftar"
+                    },
+                    {
+                      "key": "password",
+                      "value": "Password123!",
+                      "type": "text",
+                      "description": "(Wajib) Kata sandi akun"
                     }
-                  }
+                  ]
                 },
                 "url": {
-                  "raw": "http://localhost:3000/api/v1/auth/resend-otp",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "3000",
-                  "path": [
-                    "api",
-                    "v1",
-                    "auth",
-                    "resend-otp"
-                  ]
+                  "raw": "{{BASE_URL}}/api/v1/auth/resend-otp",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["api", "v1", "auth", "resend-otp"]
                 }
               },
               "response": []
@@ -597,27 +689,26 @@
                 "method": "POST",
                 "header": [],
                 "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"email\": \"\",\r\n  \"password\": \"\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "email",
+                      "value": "",
+                      "type": "text",
+                      "description": "(Wajib) Email aktif/terdaftar"
+                    },
+                    {
+                      "key": "password",
+                      "value": "",
+                      "type": "text",
+                      "description": "(Wajib) Kata sandi akun"
                     }
-                  }
+                  ]
                 },
                 "url": {
-                  "raw": "http://localhost:3000/api/v1/auth/resend-otp",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "3000",
-                  "path": [
-                    "api",
-                    "v1",
-                    "auth",
-                    "resend-otp"
-                  ]
+                  "raw": "{{BASE_URL}}/api/v1/auth/resend-otp",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["api", "v1", "auth", "resend-otp"]
                 }
               },
               "response": []
@@ -631,27 +722,26 @@
                 "method": "POST",
                 "header": [],
                 "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"email\": \"rickyprakusa281@gmail.com\",\r\n  \"password\": \"Password123!\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "email",
+                      "value": "rickyprakusa281@gmail.com",
+                      "type": "text",
+                      "description": "(Wajib) Email aktif/terdaftar"
+                    },
+                    {
+                      "key": "password",
+                      "value": "Password123!",
+                      "type": "text",
+                      "description": "(Wajib) Kata sandi akun"
                     }
-                  }
+                  ]
                 },
                 "url": {
-                  "raw": "http://localhost:3000/api/v1/auth/resend-otp",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "3000",
-                  "path": [
-                    "api",
-                    "v1",
-                    "auth",
-                    "resend-otp"
-                  ]
+                  "raw": "{{BASE_URL}}/api/v1/auth/resend-otp",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["api", "v1", "auth", "resend-otp"]
                 }
               },
               "response": []
@@ -665,27 +755,26 @@
                 "method": "POST",
                 "header": [],
                 "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"email\": \"rickyprakusa281@gmail.com\",\r\n  \"password\": \"Password123!\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "email",
+                      "value": "rickyprakusa281@gmail.com",
+                      "type": "text",
+                      "description": "(Wajib) Email aktif/terdaftar"
+                    },
+                    {
+                      "key": "password",
+                      "value": "Password123!",
+                      "type": "text",
+                      "description": "(Wajib) Kata sandi akun"
                     }
-                  }
+                  ]
                 },
                 "url": {
-                  "raw": "http://localhost:3000/api/v1/auth/resend-otp",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "3000",
-                  "path": [
-                    "api",
-                    "v1",
-                    "auth",
-                    "resend-otp"
-                  ]
+                  "raw": "{{BASE_URL}}/api/v1/auth/resend-otp",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["api", "v1", "auth", "resend-otp"]
                 }
               },
               "response": []
@@ -699,27 +788,26 @@
                 "method": "POST",
                 "header": [],
                 "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"email\": \"rickyprakusa281@gmail.com\",\r\n  \"password\": \"Password123!\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "email",
+                      "value": "rickyprakusa281@gmail.com",
+                      "type": "text",
+                      "description": "(Wajib) Email aktif/terdaftar"
+                    },
+                    {
+                      "key": "password",
+                      "value": "Password123!",
+                      "type": "text",
+                      "description": "(Wajib) Kata sandi akun"
                     }
-                  }
+                  ]
                 },
                 "url": {
-                  "raw": "http://localhost:3000/api/v1/auth/resend-otp",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "3000",
-                  "path": [
-                    "api",
-                    "v1",
-                    "auth",
-                    "resend-otp"
-                  ]
+                  "raw": "{{BASE_URL}}/api/v1/auth/resend-otp",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["api", "v1", "auth", "resend-otp"]
                 }
               },
               "response": []
@@ -729,86 +817,1258 @@
       ]
     },
     {
-      "name": "http://localhost:3000/api/v1/wallets",
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "{{supabase_service_role_api_key_0y13}}",
-              "type": "string"
-            }
-          ]
+      "name": "2. User Profile",
+      "description": "Mengelola detail profil pengguna, mengunggah foto profil, dan menonaktifkan akun.",
+      "item": [
+        {
+          "name": "2.1 Get Profile User",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/users/profile",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "users", "profile"]
+            },
+            "description": "Mengambil informasi profil lengkap dari user yang aktif menggunakan token JWT."
+          },
+          "response": []
         },
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:3000/api/v1/wallets",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3000",
-          "path": [
-            "api",
-            "v1",
-            "wallets"
-          ]
+        {
+          "name": "2.2 Upload Foto Profil (Avatar)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "avatar",
+                  "type": "file",
+                  "description": "(Wajib) File gambar foto profil (jpg, jpeg, png, gif, webp) maksimal 2MB"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/users/profile/avatar",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "users", "profile", "avatar"]
+            },
+            "description": "Mengunggah atau mengganti foto profil user secara lokal via multipart/form-data."
+          },
+          "response": []
+        },
+        {
+          "name": "2.3 Hapus Foto Profil (Avatar)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/users/profile/avatar",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "users", "profile", "avatar"]
+            },
+            "description": "Menghapus foto profil dari database dan menghapus filenya secara fisik dari server."
+          },
+          "response": []
+        },
+        {
+          "name": "2.4 Hapus / Menonaktifkan Akun (Soft Delete)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/users/profile",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "users", "profile"]
+            },
+            "description": "Menonaktifkan akun user secara aman (isDeleted: true). User terhapus tidak akan bisa login kembali."
+          },
+          "response": []
         }
-      },
-      "response": []
+      ]
     },
     {
-      "name": "http://localhost:3000/api/v1/wallets/topup",
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "{{json_web_token_0y13}}",
-              "type": "string"
-            }
-          ]
+      "name": "3. E-Wallet & Payments",
+      "description": "Mengelola saldo dompet digital, memicu request top-up, pembatalan top-up, dan penerimaan status webhook Midtrans.",
+      "item": [
+        {
+          "name": "3.1 Get Wallet & History",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/wallets",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "wallets"]
+            },
+            "description": "Melihat saldo aktif dan seluruh riwayat mutasi wallet dari user bersangkutan."
+          },
+          "response": []
         },
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n  \"amount\": 100000\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
+        {
+          "name": "3.2 Request Top-Up Saldo",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "amount",
+                  "value": "100000",
+                  "type": "text",
+                  "description": "(Wajib) Nominal top-up saldo minimal Rp10.000"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/wallets/topup",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "wallets", "topup"]
+            },
+            "description": "Membuat transaksi top-up pending dan mendapatkan URL/Token pembayaran Snap Midtrans."
+          },
+          "response": []
         },
-        "url": {
-          "raw": "http://localhost:3000/api/v1/wallets/topup",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3000",
-          "path": [
-            "api",
-            "v1",
-            "wallets",
-            "topup"
-          ]
+        {
+          "name": "3.3 Batalkan Top-Up Pending",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/wallets/topup/:topupId/cancel",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "wallets", "topup", ":topupId", "cancel"],
+              "variable": [
+                {
+                  "key": "topupId",
+                  "value": "TOPUP-xxxxxx",
+                  "description": "ID reference transaksi top-up"
+                }
+              ]
+            },
+            "description": "Membatalkan transaksi top-up pending secara manual."
+          },
+          "response": []
+        },
+        {
+          "name": "3.4 Midtrans Webhook (Public)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"transaction_status\": \"settlement\",\n  \"status_code\": \"200\",\n  \"signature_key\": \"SHA512_hash_signature_goes_here\",\n  \"order_id\": \"TOPUP-20260708-xxxxxxxx\",\n  \"gross_amount\": \"100000.00\",\n  \"fraud_status\": \"accept\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/payments/webhook",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "payments", "webhook"]
+            },
+            "description": "Endpoint publik untuk callback otomatis notifikasi pembayaran dari server Midtrans."
+          },
+          "response": []
         }
-      },
-      "response": []
+      ]
+    },
+    {
+      "name": "4. Categories",
+      "description": "Modul CRUD master data kategori hotel.",
+      "item": [
+        {
+          "name": "4.1 Create Category",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "name",
+                  "value": "Bintang 5",
+                  "type": "text",
+                  "description": "(Wajib) Nama kategori hotel"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/categories",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "categories"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "4.2 Get All Categories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/categories",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "categories"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "4.3 Update Category",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "name",
+                  "value": "Resort Bintang 5",
+                  "type": "text",
+                  "description": "(Wajib) Nama kategori baru"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/categories/:id",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "categories", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "",
+                  "description": "ID Kategori"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "4.4 Delete Category",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/categories/:id",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "categories", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "",
+                  "description": "ID Kategori"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "5. Vouchers",
+      "description": "Modul CRUD master voucher diskon promosi.",
+      "item": [
+        {
+          "name": "5.1 Create Voucher",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "code",
+                  "value": "DISKONHEBAT",
+                  "type": "text",
+                  "description": "(Wajib) Kode unik voucher"
+                },
+                {
+                  "key": "discountType",
+                  "value": "nominal",
+                  "type": "text",
+                  "description": "(Wajib) nominal / percentage"
+                },
+                {
+                  "key": "discountValue",
+                  "value": "25000",
+                  "type": "text",
+                  "description": "(Wajib) Nilai potongan diskon"
+                },
+                {
+                  "key": "maxUsage",
+                  "value": "50",
+                  "type": "text",
+                  "description": "(Wajib) Maks penggunaan kuota"
+                },
+                {
+                  "key": "expiresAt",
+                  "value": "2026-12-31T23:59:59Z",
+                  "type": "text",
+                  "description": "(Wajib) Tanggal kadaluarsa"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/vouchers",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "vouchers"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "5.2 Get All Vouchers",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/vouchers",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "vouchers"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "5.3 Check Voucher Code Valid",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/vouchers/:code",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "vouchers", ":code"],
+              "variable": [
+                {
+                  "key": "code",
+                  "value": "DISKONHEBAT",
+                  "description": "Kode voucher diskon"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "5.4 Update Voucher",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "maxUsage",
+                  "value": "100",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/vouchers/:id",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "vouchers", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "",
+                  "description": "ID Voucher"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "5.5 Delete Voucher",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/vouchers/:id",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "vouchers", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "",
+                  "description": "ID Voucher"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "6. Hotels & Room Types",
+      "description": "Modul CRUD data hotel, tipe kamar, serta rute integrasi API Agoda eksternal.",
+      "item": [
+        {
+          "name": "6.1 Create Hotel",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "name",
+                  "value": "Hotel Grand Melia",
+                  "type": "text",
+                  "description": "(Wajib) Nama Hotel"
+                },
+                {
+                  "key": "address",
+                  "value": "Jalan Rasuna Said, Jakarta",
+                  "type": "text",
+                  "description": "(Wajib) Alamat Hotel"
+                },
+                {
+                  "key": "description",
+                  "value": "Hotel bintang 5 mewah di pusat kota",
+                  "type": "text",
+                  "description": "(Wajib) Deskripsi hotel"
+                },
+                {
+                  "key": "categoryId",
+                  "value": "",
+                  "type": "text",
+                  "description": "(Wajib) ID Kategori hotel"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/hotels",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "hotels"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "6.2 Get All Hotels",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/hotels",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "hotels"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "6.3 Get Hotel Details by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/hotels/:id",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "hotels", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "",
+                  "description": "ID Hotel lokal"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "6.4 Update Hotel Details",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "description",
+                  "value": "Deskripsi hotel yang diperbarui",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/hotels/:id",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "hotels", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "",
+                  "description": "ID Hotel lokal"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "6.5 Delete Hotel",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/hotels/:id",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "hotels", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "",
+                  "description": "ID Hotel lokal"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "6.6 Add Room Type",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "name",
+                  "value": "Deluxe King Room",
+                  "type": "text",
+                  "description": "(Wajib) Nama tipe kamar"
+                },
+                {
+                  "key": "price",
+                  "value": "750000",
+                  "type": "text",
+                  "description": "(Wajib) Harga per malam"
+                },
+                {
+                  "key": "capacity",
+                  "value": "2",
+                  "type": "text",
+                  "description": "(Wajib) Kapasitas orang"
+                },
+                {
+                  "key": "quota",
+                  "value": "10",
+                  "type": "text",
+                  "description": "(Wajib) Jumlah kamar tersedia"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/hotels/:hotelId/rooms",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "hotels", ":hotelId", "rooms"],
+              "variable": [
+                {
+                  "key": "hotelId",
+                  "value": "",
+                  "description": "ID Hotel tempat kamar didaftarkan"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "6.7 Get Hotel Room Types",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/hotels/:hotelId/rooms",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "hotels", ":hotelId", "rooms"],
+              "variable": [
+                {
+                  "key": "hotelId",
+                  "value": "",
+                  "description": "ID Hotel"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "6.8 Update Room Type",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "price",
+                  "value": "850000",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/hotels/:hotelId/rooms/:roomId",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "hotels", ":hotelId", "rooms", ":roomId"],
+              "variable": [
+                {
+                  "key": "hotelId",
+                  "value": "",
+                  "description": "ID Hotel"
+                },
+                {
+                  "key": "roomId",
+                  "value": "",
+                  "description": "ID Tipe Kamar"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "6.9 Delete Room Type",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/hotels/:hotelId/rooms/:roomId",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "hotels", ":hotelId", "rooms", ":roomId"],
+              "variable": [
+                {
+                  "key": "hotelId",
+                  "value": "",
+                  "description": "ID Hotel"
+                },
+                {
+                  "key": "roomId",
+                  "value": "",
+                  "description": "ID Tipe Kamar"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "6.10 Get External Hotel Details (Agoda API)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/hotels/external/details?propertyId=9062231",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "hotels", "external", "details"],
+              "query": [
+                {
+                  "key": "propertyId",
+                  "value": "9062231",
+                  "description": "(Wajib) ID properti hotel dari Agoda API"
+                }
+              ]
+            },
+            "description": "Mendapatkan detail data hotel real-time dari Agoda API via RapidAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "6.11 Get External Hotel Search (Agoda API)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/hotels/external/search-overnight?id=1_318&checkinDate=2026-07-09",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "hotels", "external", "search-overnight"],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "1_318"
+                },
+                {
+                  "key": "checkinDate",
+                  "value": "2026-07-09"
+                }
+              ]
+            },
+            "description": "Mencari properti hotel real-time berdasarkan pencarian lokasi Agoda API."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "7. Bookings & Transactions",
+      "description": "Modul transaksi pemesanan kamar hotel oleh Customer.",
+      "item": [
+        {
+          "name": "7.1 Create Booking Room",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "hotelId",
+                  "value": "",
+                  "type": "text",
+                  "description": "(Wajib) ID Hotel lokal"
+                },
+                {
+                  "key": "roomId",
+                  "value": "",
+                  "type": "text",
+                  "description": "(Wajib) ID Tipe Kamar"
+                },
+                {
+                  "key": "checkInDate",
+                  "value": "2026-07-20",
+                  "type": "text",
+                  "description": "(Wajib) Tanggal check-in"
+                },
+                {
+                  "key": "checkOutDate",
+                  "value": "2026-07-22",
+                  "type": "text",
+                  "description": "(Wajib) Tanggal check-out"
+                },
+                {
+                  "key": "paymentMethod",
+                  "value": "wallet",
+                  "type": "text",
+                  "description": "(Wajib) wallet / midtrans"
+                },
+                {
+                  "key": "voucherCode",
+                  "value": "",
+                  "type": "text",
+                  "description": "(Opsional) Kode voucher diskon"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/bookings",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "bookings"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "7.2 Get Bookings List",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/bookings",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "bookings"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "7.3 Get Booking Details by ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/bookings/:id",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "bookings", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "",
+                  "description": "ID Booking"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "7.4 Cancel Booking",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/bookings/:id/cancel",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "bookings", ":id", "cancel"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "",
+                  "description": "ID Booking"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "7.5 Process Booking Refund (Admin Only)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/bookings/:id/refund",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "bookings", ":id", "refund"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "",
+                  "description": "ID Booking"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "8. Check-In, Check-Out & Ulasan",
+      "description": "Modul tambahan untuk check-in/out tamu dan review ulasan hotel.",
+      "item": [
+        {
+          "name": "8.1 Check-In Guest",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/bookings/:id/checkin",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "bookings", ":id", "checkin"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "",
+                  "description": "ID Booking"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "8.2 Check-Out Guest",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/bookings/:id/checkout",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "bookings", ":id", "checkout"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "",
+                  "description": "ID Booking"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "8.3 Create Review Ulasan",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "rating",
+                  "value": "5",
+                  "type": "text",
+                  "description": "(Wajib) Rating bintang 1 sampai 5"
+                },
+                {
+                  "key": "comment",
+                  "value": "Kamar sangat bersih dan nyaman!",
+                  "type": "text",
+                  "description": "(Wajib) Kalimat ulasan/feedback"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/bookings/:bookingId/reviews",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "bookings", ":bookingId", "reviews"],
+              "variable": [
+                {
+                  "key": "bookingId",
+                  "value": "",
+                  "description": "ID Booking terkait"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "8.4 Get Hotel Reviews List",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/hotels/:hotelId/reviews",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "hotels", ":hotelId", "reviews"],
+              "variable": [
+                {
+                  "key": "hotelId",
+                  "value": "",
+                  "description": "ID Hotel lokal"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "9. System Health Check",
+      "description": "Melihat status kesehatan server dan koneksi database.",
+      "item": [
+        {
+          "name": "9.1 Get Health Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/health",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "health"]
+            }
+          },
+          "response": []
+        }
+      ]
     }
   ],
   "variable": [
     {
-      "key": "supabase_service_role_api_key_0y13",
-      "secret": true
+      "key": "BASE_URL",
+      "value": "http://localhost:3000",
+      "type": "string"
     },
     {
-      "key": "json_web_token_0y13",
-      "secret": true
+      "key": "token_jwt",
+      "value": "",
+      "type": "string"
     }
   ]
 }
