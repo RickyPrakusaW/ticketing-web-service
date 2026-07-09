@@ -262,6 +262,11 @@ Semua request menggunakan header `Content-Type: application/json`.
   "success": true,
   "message": "Berhasil mengambil data wallet",
   "data": {
+    "user": {
+      "id": "6a4e79f7d269611e25699002",
+      "name": "Budi Santoso",
+      "email": "budi@example.com"
+    },
     "balance": 150000,
     "transactions": [
       {
@@ -327,6 +332,86 @@ Semua request menggunakan header `Content-Type: application/json`.
   "data": {
     "status": "cancelled"
   }
+}
+```
+
+---
+
+## 10. Upload / Update Foto Profil (Avatar)
+* **Method**: `PUT`
+* **URL**: `{{BASE_URL}}/api/v1/users/profile/avatar`
+* **Headers**: `Authorization: Bearer <token_jwt>`, `Content-Type: multipart/form-data`
+* **Body (form-data)**: 
+  * Key: `avatar` (type: File, value: select image file)
+* **Deskripsi**: Mengunggah foto profil baru untuk pengguna yang sedang login. Format gambar yang didukung: JPEG, JPG, PNG, GIF, WEBP. Batas ukuran maksimal file adalah 2MB.
+
+### Response Sukses (200 OK)
+```json
+{
+  "success": true,
+  "message": "Foto profil berhasil diperbarui",
+  "data": {
+    "avatarUrl": "http://localhost:3000/public/uploads/avatar-665f1c2eb8c8a-1783528677770.jpg"
+  }
+}
+```
+
+### Response Gagal - File Tidak Dilampirkan (400 Bad Request)
+```json
+{
+  "success": false,
+  "message": "File gambar profile wajib dilampirkan",
+  "data": null
+}
+```
+
+### Response Gagal - Format Tidak Valid (400 Bad Request)
+```json
+{
+  "success": false,
+  "message": "Hanya file gambar (jpg, jpeg, png, gif, webp) yang diperbolehkan!"
+}
+```
+
+### Response Gagal - Ukuran Melebihi Batas (400 Bad Request)
+```json
+{
+  "success": false,
+  "message": "Ukuran file gambar terlalu besar (maksimal 2MB)"
+}
+```
+
+---
+
+## 11. Hapus Foto Profil (Avatar)
+* **Method**: `DELETE`
+* **URL**: `{{BASE_URL}}/api/v1/users/profile/avatar`
+* **Headers**: `Authorization: Bearer <token_jwt>`
+* **Deskripsi**: Menghapus foto profil saat ini. Menyetel kembali `avatarUrl` menjadi `null` dan menghapus berkas gambarnya secara fisik dari direktori server.
+
+### Response Sukses (200 OK)
+```json
+{
+  "success": true,
+  "message": "Foto profil berhasil dihapus",
+  "data": null
+}
+```
+
+---
+
+## 12. Hapus / Menonaktifkan Akun User (Soft Delete)
+* **Method**: `DELETE`
+* **URL**: `{{BASE_URL}}/api/v1/users/profile`
+* **Headers**: `Authorization: Bearer <token_jwt>`
+* **Deskripsi**: Menonaktifkan akun pengguna saat ini (soft delete). Menyetel `isDeleted` menjadi `true`. Setelah dihapus, pengguna tidak akan bisa melakukan login kembali.
+
+### Response Sukses (200 OK)
+```json
+{
+  "success": true,
+  "message": "Akun profil Anda berhasil dinonaktifkan (dihapus)",
+  "data": null
 }
 ```
 

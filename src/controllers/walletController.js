@@ -18,6 +18,11 @@ exports.getWallet = async (req, res) => {
       success: true,
       message: "Berhasil mengambil data wallet",
       data: {
+        user: {
+          id: req.user._id,
+          name: req.user.name,
+          email: req.user.email,
+        },
         balance: wallet.balance,
         transactions: transactions.map((tx) => ({
           id: tx._id,

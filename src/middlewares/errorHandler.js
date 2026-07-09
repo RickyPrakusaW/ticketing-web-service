@@ -28,6 +28,16 @@ module.exports = (err, req, res, next) => {
     message = `Data '${duplicateField}' sudah terdaftar, silakan gunakan nilai lain`;
   }
 
+  // Tangani Error Multer (Upload Gambar)
+  if (err.code === "LIMIT_FILE_SIZE") {
+    statusCode = 400;
+    message = "Ukuran file gambar terlalu besar (maksimal 2MB)";
+  }
+  if (err.message && err.message.includes("Hanya file gambar")) {
+    statusCode = 400;
+    message = err.message;
+  }
+
   const response = {
     success: false,
     message,
