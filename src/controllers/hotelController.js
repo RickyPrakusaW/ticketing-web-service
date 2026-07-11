@@ -6,15 +6,6 @@ exports.createHotel = async (req, res) => {
     const { name, description, address, city, categoryId, photos, isFeatured } =
       req.body;
 
-    // 1. Validasi manual (bisa dipindah ke Joi nanti)
-    if (!name || !address || !city || !categoryId) {
-      return res.status(400).json({
-        success: false,
-        message: "Nama, alamat, kota, dan categoryId wajib diisi",
-        data: null,
-      });
-    }
-
     // 2. Cek apakah kategori ada di database
     const categoryExists = await Category.findById(categoryId);
     if (!categoryExists || categoryExists.isDeleted) {

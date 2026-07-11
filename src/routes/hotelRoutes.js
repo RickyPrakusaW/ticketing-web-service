@@ -4,12 +4,15 @@ const hotelController = require("../controllers/hotelController");
 const bookingController = require("../controllers/bookingController"); // For review endpoints
 const authMiddleware = require("../middlewares/authMiddleware");
 const roleMiddleware = require("../middlewares/roleMiddleware");
+const validate = require("../middlewares/validateMiddleware");
+const { hotelSchema, roomSchema } = require("../validations/hotelValidation");
 
 // CRUD Hotels
 router.post(
   "/",
   authMiddleware,
   roleMiddleware(["Admin", "HotelManager"]),
+  validate(hotelSchema),
   hotelController.createHotel,
 );
 router.get("/", hotelController.getHotels);
@@ -32,6 +35,7 @@ router.post(
   "/:hotelId/rooms",
   authMiddleware,
   roleMiddleware(["Admin", "HotelManager"]),
+  validate(roomSchema),
   hotelController.createRoomType,
 );
 router.get("/:hotelId/rooms", hotelController.getRoomTypes);
